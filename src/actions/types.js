@@ -11,3 +11,5 @@ export const SIGNIN_USER_FAIL = 'signIn_user_fail';
 export const SIGN_OUT ='sign_out';
 export const TEACHER_UPDATE = 'teacher_update';
 export const TEACHER_CREATE= 'teacher_create';
+export  const CLASS_INPUT= 'class_input';
+export const SUBJECT_INPUT = 'subject_input';

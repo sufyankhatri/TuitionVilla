@@ -3,7 +3,7 @@ import { Text, ScrollView, View, TouchableOpacity } from 'react-native';
 import { Button, FormInput, CheckBox } from 'react-native-elements';
 import Input from '../common/Input';
 import { connect } from 'react-redux';
-import { teacherUpdate, teacherCreate } from '../actions';
+import { teacherUpdate, teacherCreate, ClassInput, SubjectInput } from '../actions';
 
 class AdditionalInfo extends Component {
     state = {
@@ -15,16 +15,20 @@ class AdditionalInfo extends Component {
         chemistry: false,
         math: false
     }
+    onClassChange=(condition,val)=>{
+       this.props.ClassInput({condition,val});
+    }
 
+    onSubjectChange=(condition,val)  =>{
+        this.props.SubjectInput({condition, val});
+    }
     Checkpress() {
 
         this.setState({ checked: !this.state.checked });
     }
     SignInPressed(){
-        const { name, phone, address, cnic, age, education, experience}= this.props;
-        console.log("phone");
-        console.log({phone});
-        this.props.teacherCreate({name, phone, address, cnic, age, education, experience});
+        const { name, phone, address, cnic, age, education, experience, subjects, classes}= this.props;
+        this.props.teacherCreate({name, phone, address, cnic, age, education, experience, subjects, classes});
     }
     render() {
         return (
@@ -51,19 +55,19 @@ class AdditionalInfo extends Component {
                 <View style={styles.containerStyle}>
                     <CheckBox title='IX'
                         checked={this.state.nine}
-                        onPress={() => { this.setState({ nine: !this.state.nine }) }}
+                        onPress={() => { this.setState({ nine: !this.state.nine }); this.onClassChange(!this.state.nine,"nine") }}
                     />
                     <CheckBox title='X'
                         checked={this.state.ten}
-                        onPress={() => { this.setState({ ten: !this.state.ten }) }}
+                        onPress={() => { this.setState({ ten: !this.state.ten }); this.onClassChange(!this.state.ten,"ten")}}
                     />
                     <CheckBox title='XI'
                         checked={this.state.eleven}
-                        onPress={() => { this.setState({ eleven: !this.state.eleven }) }}
+                        onPress={() => { this.setState({ eleven: !this.state.eleven }); this.onClassChange(!this.state.eleven,"eleven") }}
                     />
                     <CheckBox title='XII'
                         checked={this.state.twelve}
-                        onPress={() => { this.setState({ twelve: !this.state.twelve }) }}
+                        onPress={() => { this.setState({ twelve: !this.state.twelve }); this.onClassChange(!this.state.twelve,"twelve") }}
                     />
 
                 </View>
@@ -71,15 +75,15 @@ class AdditionalInfo extends Component {
                 <View style={styles.containerStyle}>
                     <CheckBox title='Physics'
                         checked={this.state.physics}
-                        onPress={() => { this.setState({ physics: !this.state.physics }) }}
+                        onPress={() => { this.setState({ physics: !this.state.physics }); this.onSubjectChange(!this.state.physics,"physics") }}
                     />
                     <CheckBox title='Maths'
                         checked={this.state.math}
-                        onPress={() => { this.setState({ math: !this.state.math }) }}
+                        onPress={() => { this.setState({ math: !this.state.math }); this.onSubjectChange(!this.state.math,"math") }}
                     />
                     <CheckBox title='Chemistry'
                         checked={this.state.chemistry}
-                        onPress={() => { this.setState({ chemistry: !this.state.chemistry }) }}
+                        onPress={() => { this.setState({ chemistry: !this.state.chemistry }); this.onSubjectChange(!this.state.chemistry,"chemistry") }}
                     />
 
                 </View>
@@ -146,9 +150,9 @@ const styles = {
 };
 
 const mapStateToProps = (state) => {
-    const { name, phone, address, cnic, age, education, experience } = state.teacher;
+    const { name, phone, address, cnic, age, education, experience,subjects, classes } = state.teacher;
 
-    return { name, phone, address, cnic, age, education, experience };
+    return { name, phone, address, cnic, age, education, experience, subjects, classes };
 };
 
-export default connect(mapStateToProps, { teacherUpdate, teacherCreate })(AdditionalInfo);
+export default connect(mapStateToProps, { teacherUpdate, teacherCreate, ClassInput, SubjectInput })(AdditionalInfo);
