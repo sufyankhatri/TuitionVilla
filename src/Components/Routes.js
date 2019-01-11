@@ -18,8 +18,8 @@ const Routes = () => {
 
         <Scene key="Information" component={SignUp} title="Personal Information" onRight={() => Actions.additionalInfo()}
           rightTitle="Next" initial />
-        <Scene key="additionalInfo" component={AdditionalInfo} title="Additional Information" />
-        <Scene key="Login" component={Login} title="Please Login"  initial/>
+        <Scene key="additionalInfo" component={AdditionalInfo} title="Additional Information"  />
+        <Scene key="Login" component={Login} title="Please Login"  />
         <Scene key="timeline" component={Timeline} title="TimeLine" />
       </Scene>
     </Router>

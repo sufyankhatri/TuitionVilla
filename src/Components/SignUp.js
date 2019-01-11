@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 import { Text, View, ScrollView } from 'react-native';
 import { Button, FormInput } from 'react-native-elements';
 import Input from '../common/Input';
-export default class SignUp extends Component {
+import {teacherUpdate} from '../actions';
+import {connect} from 'react-redux';
+class SignUp extends Component {
 
     render() {
         return (
@@ -12,6 +14,9 @@ export default class SignUp extends Component {
                     <FormInput
                         placeholder='Name'
                         inputStyle={styles.inputStyle}
+                        onChangeText={value => this.props.teacherUpdate({ prop: 'name', value})}
+                        value={this.props.name}
+
                     />
                 </View>
                 <View style={styles.containerStyle}>
@@ -19,6 +24,8 @@ export default class SignUp extends Component {
                     <FormInput
                         placeholder='Address'
                         inputStyle={styles.inputStyle}
+                        onChangeText={value => this.props.teacherUpdate({ prop: 'address', value})}
+                        value={this.props.address}
                     />
                 </View>
                 <View style={styles.containerStyle}>
@@ -26,21 +33,17 @@ export default class SignUp extends Component {
                     <FormInput
                         placeholder='Contact No..'
                         inputStyle={styles.inputStyle}
+                        onChangeText={value => this.props.teacherUpdate({ prop: 'phone', value})}
+                        value={this.props.phone}
                     />
                 </View>
-                <Text style={styles.textStyle}>Adddress</Text>
-                <View style={styles.containerStyle}>
-                    <FormInput
-                        placeholder='Address'
-                        inputStyle={styles.inputStyle}
-                    />
-                </View>
-
                 <Text style={styles.textStyle}>CNIC</Text>
                 <View style={styles.containerStyle}>
                     <FormInput
                         placeholder='CNIC'
                         inputStyle={styles.inputStyle}
+                        onChangeText={value => this.props.teacherUpdate({ prop: 'cnic', value})}
+                        value={this.props.cnic}
                     />
                 </View>
                 <View style={styles.containerStyle}>
@@ -48,6 +51,8 @@ export default class SignUp extends Component {
                     <FormInput
                         placeholder='Age'
                         inputStyle={styles.inputStyle}
+                        onChangeText={value => this.props.teacherUpdate({ prop: 'age', value})}
+                        value={this.props.age}
                     />
                 </View>
             </ScrollView>
@@ -83,3 +88,12 @@ const styles = {
     }
 
 };
+
+
+const mapStateToProps = (state) => {
+    const { name, phone, address, cnic, age} = state.teacher;
+  
+    return { name, phone, address, cnic, age  };
+  };
+  
+  export default connect(mapStateToProps, { teacherUpdate })(SignUp);
