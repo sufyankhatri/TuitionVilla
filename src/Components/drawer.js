@@ -3,10 +3,11 @@ import { TouchableOpacity, View, Text, Image } from 'react-native';
 import { Button } from 'react-native-elements';
 import { Actions } from 'react-native-router-flux';
 import {connect} from 'react-redux';
-import { signOut} from '../actions'
+import { signOut} from '../actions';
 class drawer extends Component {
 
     SignOutPressed(){
+            
             this.props.signOut();
     }
     render() {

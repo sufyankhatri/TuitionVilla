@@ -2,12 +2,15 @@ import {
     TEACHER_UPDATE,
     TEACHER_CREATE,
     CLASS_INPUT,
-    SUBJECT_INPUT
+    SUBJECT_INPUT,
+    SIGN_OUT
+
 } from '../actions/types';
 
 const INITIAL_STATE = {
     name: '',
     Address: '',
+    error: '',
     phone: '',
     cnic: '',
     age: '',
@@ -46,7 +49,9 @@ export default (state = INITIAL_STATE, action) => {
 
             }
             return { ...state, subjects: Subject }
-
+        case SIGN_OUT:
+            console.log("signed out!");
+            return {...state,...INITIAL_STATE}
         default:
             return state;
     }

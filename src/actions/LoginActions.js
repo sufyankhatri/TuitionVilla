@@ -7,12 +7,8 @@ import {
   LOGIN_USER_SUCCESS,
   LOGIN_USER_FAIL,
   LOGIN_USER,
-  SIGNIN_USER,
-  SIGNIN_USER_SUCCESS,
-  SIGNIN_USER_FAIL,
   TEACHER_STATE,
-  STUDENT_STATE,
-  SIGN_OUT
+  STUDENT_STATE
 } from './types';
 
 
@@ -44,63 +40,35 @@ export const studentState = () => {
     type: STUDENT_STATE
   };
 };
-export const loginUser = ({ email, password }) => {
+export const loginUser = ({ email, password, student, teacher }) => {
+
   return (dispatch) => {
     dispatch({ type: LOGIN_USER });
 
     firebase.auth().signInWithEmailAndPassword(email, password)
-      .then(user => loginUserSuccess(dispatch, user))
-      .catch(() => loginUserFail(dispatch));
+      .then(() => {
+      
+        dispatch({ type: LOGIN_USER_SUCCESS });
+        if (student)
+          Actions.student_timeline();
+        if (teacher)
+          Actions.teacher_timeline();
+
+
+      })
+      .catch(
+        () => {
+          return { type: LOGIN_USER_FAIL };
+        });
+
   };
 };
 
-export const signUser = ({ email, password }) => {
 
-  return (dispatch) => {
-    dispatch({ type: SIGNIN_USER });
+// const loginUserFail = () => {
 
-    firebase.auth().createUserWithEmailAndPassword(email, password)
-      .then(user => signUserSuccess(dispatch, user))
-      .catch(() => signInUserFail(dispatch));
-  };
+// };
+
+const loginUserSuccess = (student, teacher) => {
 };
 
-const signUserSuccess = (dispatch, user) => {
-  dispatch({
-    type: SIGNIN_USER_SUCCESS,
-    payload: user
-  });
-  Actions.Information();
-}
-const signInUserFail = (dispatch) => {
-  dispatch({ type: SIGNIN_USER_FAIL });
-};
-
-const loginUserFail = (dispatch) => {
-  dispatch({ type: LOGIN_USER_FAIL });
-};
-
-const loginUserSuccess = (dispatch, user) => {
-  dispatch({
-    type: LOGIN_USER_SUCCESS,
-    payload: user
-  });
-
-  Actions.Information();
-};
-
-
-export const signOut = () => {
-  
-  firebase.auth().signOut().
-  then(()=> {
-    console.log('Signed Out');
-  }) 
-  .catch(() =>{
-    console.log('Sign Out Error');
-  });
-  Actions.Login();
-  return{
-    type: SIGN_OUT
-  };
-};

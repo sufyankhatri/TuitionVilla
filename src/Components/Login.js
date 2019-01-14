@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Image, Text, View, TouchableOpacity } from 'react-native';
+import { Image, Text, View, TouchableOpacity, ImageBackground } from 'react-native';
 import { FormInput, CheckBox } from 'react-native-elements';
 import { Actions } from 'react-native-router-flux';
 import Spinner from '../common/Spinner';
@@ -15,14 +15,24 @@ class Login extends Component {
         this.props.passwordChanged(text);
     }
     onLogInPress() {
-        const { email, password } = this.props;
+        const { email, password, student, teacher } = this.props;
 
-        this.props.loginUser({ email, password });
+        this.props.loginUser({ email, password, student, teacher });
     }
-    onSignInPress() {
-        const { email, password } = this.props;
+    SignUpPressed() {
+        // const { email, password } = this.props;
 
-        this.props.signUser({ email, password });
+        // this.props.signUser({ email, password });
+
+        if (this.props.teacher) {
+
+            Actions.teacher_signup();
+
+        }
+        if (this.props.student) {
+
+            Actions.loginDetailsStudent()
+        }
 
     }
     renderLogInButton() {
@@ -38,71 +48,65 @@ class Login extends Component {
 
         );
     }
-    renderSignInButton() {
-        if (this.props.SignInLoading) {
-            return <Spinner size="large" />;
-        }
 
-        return (
-            <TouchableOpacity style={styles.ButtonStyle} onPress={this.onSignInPress.bind(this)}>
-                <Text style={styles.buttonText}>Sign Up</Text>
-            </TouchableOpacity>
-
-        );
-    }
-    
 
     PressTeacherState() {
-       
+
+
         this.props.teacherState();
 
     }
     PressStudentState() {
-       
+
         this.props.studentState();
+
     }
     render() {
         return (
-            <View style={styles.loginStyle}>
-                <Image
-                    style={styles.imageStyle}
-                    source={require('../../Icons/logo.png')} />
-                <View style={styles.containerStyle}>
-                    <Text style={styles.textStyle}>Email </Text>
-                    <FormInput
-                        placeholder='example@test.com'
-                        inputStyle={styles.inputStyle}
-                        onChangeText={this.onEmailChange.bind(this)}
-                        value={this.props.email}
-                    />
-                </View>
-                <View style={styles.containerStyle}>
-                    <Text style={styles.textStyle}>Password</Text>
-                    <FormInput
-                        placeholder='password'
-                        inputStyle={styles.inputStyle}
-                        onChangeText={this.onPasswordChange.bind(this)}
-                        secureTextEntry
-                        value={this.props.password}
-                    />
-                </View>
-                <View style={styles.checkBoxContainer}>
-                    <CheckBox title="Teacher" containerStyle={styles.checkBoxStyle} checked={this.props.teacher} onPress={this.PressTeacherState.bind(this)} />
-                    <CheckBox title="Student" containerStyle={styles.checkBoxStyle} checked={this.props.student} onPress={this.PressStudentState.bind(this)} />
-                </View>
-                <View>
-                    <Text style={styles.errorTextStyle}>
-                        {this.props.error}
-                    </Text>
+            <ImageBackground source={require('../../Icons/background.jpg')} style={{ width: '100%', height: '100%' }}>
+                <View style={styles.loginStyle}>
+                    <Image
+                        style={styles.imageStyle}
+                        source={require('../../Icons/logo.png')} />
+                    <View style={styles.containerStyle}>
+                        <Text style={styles.textStyle}>Email </Text>
+                        <FormInput
+                            placeholder='example@test.com'
+                            inputStyle={styles.inputStyle}
+                            onChangeText={this.onEmailChange.bind(this)}
+                            value={this.props.email}
+                        />
+                    </View>
+                    <View style={styles.containerStyle}>
+                        <Text style={styles.textStyle}>Password</Text>
+                        <FormInput
+                            placeholder='password'
+                            inputStyle={styles.inputStyle}
+                            onChangeText={this.onPasswordChange.bind(this)}
+                            secureTextEntry
+                            value={this.props.password}
+                        />
+                    </View>
+                    <View style={styles.checkBoxContainer}>
+                        <CheckBox title="Teacher" containerStyle={styles.checkBoxStyle} checked={this.props.teacher} onPress={this.PressTeacherState.bind(this)} />
+                        <CheckBox title="Student" containerStyle={styles.checkBoxStyle} checked={this.props.student} onPress={this.PressStudentState.bind(this)} />
+                    </View>
+                    <View>
+                        <Text style={styles.errorTextStyle}>
+                            {this.props.error}
+                        </Text>
 
+                    </View>
+                    <View>
+                        {this.renderLogInButton()}
+                    </View>
+                    <View>
+                        <TouchableOpacity style={styles.ButtonStyle} onPress={this.SignUpPressed.bind(this)}>
+                            <Text style={styles.buttonText}>Sign Up</Text>
+                        </TouchableOpacity>
+                    </View>
                 </View>
-                <View>
-                    {this.renderLogInButton()}
-                </View>
-                <View>
-                    {this.renderSignInButton()}
-                </View>
-            </View>
+            </ImageBackground>
         );
     };
 }
@@ -164,13 +168,15 @@ const styles = {
     checkBoxStyle: {
         width: '42.5%',
         alignSelf: 'flex-start',
-        borderWidth: 2,
-
+        borderWidth: 1,
+        borderColor: '#000080',
+        backgroundColor: '#e2c3c0'
 
     },
     checkBoxContainer: {
         flexDirection: 'row',
-        paddingBottom: 10
+        paddingBottom: 10,
+        marginTop: 10
     },
     errorTextStyle: {
         fontSize: 20,
@@ -182,11 +188,11 @@ const styles = {
 
 
 const mapStateToProps = ({ auth }) => {
-    const { email, password, error, LogInLoading, SignInLoading, teacher, student, checkState } = auth;
+    const { email, password, error, LogInLoading, teacher, student, checkState } = auth;
 
-    return { email, password, error, SignInLoading, LogInLoading, teacher, student, checkState };
+    return { email, password, error, LogInLoading, teacher, student, checkState };
 };
 
 export default connect(mapStateToProps, {
-    emailChanged, passwordChanged, loginUser, signUser, teacherState, studentState, checkState
+    emailChanged, passwordChanged, loginUser, teacherState, studentState, checkState
 })(Login);

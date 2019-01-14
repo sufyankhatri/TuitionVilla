@@ -4,7 +4,6 @@ const INITIAL_STATE = {
     user: '',
     error: '',
     LogInLoading: false,
-    SignInLoading: false,
     teacher: false,
     student: true
 };
@@ -14,12 +13,9 @@ import {
     LOGIN_USER_SUCCESS,
     LOGIN_USER_FAIL,
     LOGIN_USER,
-    SIGNIN_USER,
-    SIGNIN_USER_SUCCESS,
-    SIGNIN_USER_FAIL,
     TEACHER_STATE,
     STUDENT_STATE,
-    SIGN_OUT
+    
 } from '../actions/types';
 export default (state = INITIAL_STATE, action) => {
     console.log(action);
@@ -30,23 +26,16 @@ export default (state = INITIAL_STATE, action) => {
         case PASSWORD_CHANGED:
             return { ...state, password: action.payload };
         case TEACHER_STATE:
+            console.log("reducer state teacher",state.teacher);           
             return { ...state, teacher: !state.teacher,student: false };
         case STUDENT_STATE:
             return { ...state, student: !state.student, teacher:false };
         case LOGIN_USER_SUCCESS:
-            return { ...state, ...INITIAL_STATE, user: action.payload };
+            return { ...state, ...INITIAL_STATE/*, user: action.payload*/ };
         case LOGIN_USER_FAIL:
-            return { ...state, error: 'Error in Log In', password: '', LogInLoading: false, SignInLoading: false };
+            return { ...state, error: 'Error in Log In', password: '', LogInLoading: false };
         case LOGIN_USER:
             return { ...state, LogInLoading: true, error: '' };
-        case SIGNIN_USER:
-            return { ...state, SignInLoading: true, error: '' };
-        case SIGNIN_USER_SUCCESS:
-            return { ...state, ...INITIAL_STATE, user: action.payload };
-        case SIGNIN_USER_FAIL:
-            return { ...state, error: 'Error in Sign Up', password: '', LogInLoading: false, SignInLoading: false };
-        case SIGN_OUT:
-            return{  ...state, ...INITIAL_STATE};
         default:
             return state;
     }
