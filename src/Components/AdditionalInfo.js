@@ -176,9 +176,9 @@ const styles = {
 };
 
 const mapStateToProps = (state) => {
-    const { SignInLoading, email,error, password, name, phone, address, cnic, age, education, experience, subjects, classes } = state.teacher;
+    const {  email, password, name, phone, address, cnic, age, education, experience, subjects, classes } = state.teacher;
    
-    
+    const {SignInLoading, error} = state.sign;
     return { SignInLoading, email,error, password, name, phone, address, cnic, age, education, experience, subjects, classes };
 };
 

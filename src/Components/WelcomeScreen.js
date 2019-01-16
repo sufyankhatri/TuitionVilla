@@ -4,12 +4,12 @@ import Spinner from '../common/Spinner';
 import { Actions } from "react-native-router-flux";
 class WelcomeScreen extends Component {
     componentDidMount() {
-            console.log("cdm");
+        //    console.log("cdm");
             setInterval(() => {
                 Actions.Login();
-            }, 3500);         
+            }, 2000);         
     }
-    showScreen() {
+    showScreen=() =>{
         return (
             <View>
                 <ImageBackground source={require('../../Icons/background.jpg')} style={{ width: '100%', height: '100%' }}>
@@ -32,8 +32,7 @@ class WelcomeScreen extends Component {
     render() {
         return (
             <View>
-                {this.showScreen()}
-                
+                {this.showScreen()}       
            </View>
         );
     };

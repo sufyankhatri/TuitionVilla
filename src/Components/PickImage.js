@@ -2,10 +2,10 @@ import React, { Component } from "react";
 import { View, Image, Button, StyleSheet } from "react-native";
 import ImagePicker,{showImagePicker} from 'react-native-image-picker';
 import RNFetchBlob from 'react-native-fetch-blob';
-import firebase from 'firebase';
+import firebase, { database } from 'firebase';
 import { connect } from 'react-redux'
-import { imagePicked } from '../actions/StudentActions';
-
+import { UploadImage, TurnLoadImage } from '../actions/StudentActions';
+import Spinner from '../common/Spinner';
 class PickImage extends Component {
   state = {
     pickedImaged: null
@@ -20,16 +20,17 @@ class PickImage extends Component {
   };
 
   pickImageHandler = () => {
-    console.log("Button Pressed")
+    this.props.TurnLoadImage();
+   // console.log("Button Pressed")
     showImagePicker( res => {
-      console.log("inside showImage");
+      //console.log("inside showImage");
       if (res.didCancel) {
-        console.log("User cancelled!");
+      //  console.log("User cancelled!");
       } else if (res.error) {
-        console.log("Error", res.error);
+        //console.log("Error", res.error);
       } else {
         
-        console.log("call for function");
+       // console.log("call for function");
         this.uploadImage(res.uri);
 
         //this.props.onImagePicked({uri: res.uri, base64: res.data});
@@ -43,10 +44,17 @@ class PickImage extends Component {
 //     }
 // });
 // }
-
+  getImageRef(){
+    
+    const imageKey = firebase.database().ref().child('images').push().key
+    if(this.props.teacher)
+    return (firebase.storage().ref(`/users/Teachers`).child(`${imageKey}`))
+    if(this.props.student)
+    return (firebase.storage().ref(`/users/Students`).child(`${imageKey}`))
+  }
 
    uploadImage = (uri, mime = 'application/octet-stream') => {
-    console.log("inside uploadImage:",uri);
+    //console.log("Inside function");
     const image = uri;
 
     const Blob = RNFetchBlob.polyfill.Blob;
@@ -54,45 +62,61 @@ class PickImage extends Component {
     window.XMLHttpRequest = RNFetchBlob.polyfill.XMLHttpRequest;
     window.Blob = Blob;
 
-   
+    
+    //console.log("image Key:",imageKey);
     let uploadBlob = null;
-    const { currentUser } = firebase.auth();
-    const imageRef = firebase.storage().ref(`/users/Teachers`).child(`${currentUser.uid}.jpg`);
+    let imageRef = this.getImageRef()
     //let mime = 'image/jpg';
     fs.readFile(image, 'base64')
       .then((data) => {
-        console.log("pehli");
+        
         return Blob.build(data, { type: `${mime};BASE64` });
     })
     .then((blob) => {
-        console.log("dusri");
+        
         uploadBlob = blob
         return imageRef.put(blob, { contentType: mime });
       })
       .then(() => {
-        console.log("teesri");
+        
         uploadBlob.close();
         return imageRef.getDownloadURL();
       })
       .then((url) => {
-        console.log("final");
+        //resolve(url);
+        //console.log(url);
         // URL of the image uploaded on Firebase storage
-        console.log(url);
-        
+        this.props.UploadImage(url);
+        //console.log(this.props.imageLoading);
       })
       .catch((error) => {
-        console.log(error);
+        ///console.log(error);
 
       })  
   }
 
+  renderImage(){
+    //console.log(this.props.imageLoading);
+    if(this.props.imageLoading){
+
+        //console.log("trueee");
+        return <Spinner size="large" />;
+    }
+    else if (this.props.uri!=null){
+    return(
+    //  console.log("falsee");
+      <Image source={{uri:this.props.uri}} style={styles.previewImage}/>
+    
+    );
+    }
+  }
 
 
   render() {
     return (
       <View style={styles.container}>
         <View style={styles.placeholder}>
-          <Image source={this.props.image} style={styles.previewImage} />
+          {this.renderImage()}
         </View>
         <View style={styles.button}>
           <Button title="Pick Image" onPress={this.pickImageHandler.bind(this)} />
@@ -124,8 +148,9 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = (state) => {
-  const { image } = state.student;
-  return { image }
+  const { uri, imageLoading } = state.student;
+  const {student , teacher} = state.auth;
+  return { uri, imageLoading, student, teacher };
 }
 
-export default connect(mapStateToProps, { imagePicked })(PickImage);
+export default connect(mapStateToProps, { UploadImage, TurnLoadImage })(PickImage);

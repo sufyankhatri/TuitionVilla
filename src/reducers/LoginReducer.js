@@ -15,10 +15,10 @@ import {
     LOGIN_USER,
     TEACHER_STATE,
     STUDENT_STATE,
-    
+
 } from '../actions/types';
 export default (state = INITIAL_STATE, action) => {
-    console.log(action);
+
     switch (action.type) {
 
         case EMAIL_CHANGED:
@@ -26,16 +26,19 @@ export default (state = INITIAL_STATE, action) => {
         case PASSWORD_CHANGED:
             return { ...state, password: action.payload };
         case TEACHER_STATE:
-            console.log("reducer state teacher",state.teacher);           
-            return { ...state, teacher: !state.teacher,student: false };
+            return { ...state, teacher: !state.teacher, student: false };
         case STUDENT_STATE:
-            return { ...state, student: !state.student, teacher:false };
+            return { ...state, student: !state.student, teacher: false };
+        case LOGIN_USER:
+            console.log("inside reducer login_user");
+            return { ...state, LogInLoading: true, error: '' };
+
         case LOGIN_USER_SUCCESS:
+            console.log("login success R");
             return { ...state, ...INITIAL_STATE/*, user: action.payload*/ };
         case LOGIN_USER_FAIL:
+            console.log("login failed RR");
             return { ...state, error: 'Error in Log In', password: '', LogInLoading: false };
-        case LOGIN_USER:
-            return { ...state, LogInLoading: true, error: '' };
         default:
             return state;
     }

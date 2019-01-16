@@ -15,7 +15,11 @@ export const CLASS_INPUT = 'class_input';
 export const SUBJECT_INPUT = 'subject_input';
 
 export const STUDENT_UPDATE = 'student_update';
-export const SUBJECT_CHANGED = 'subject_changed';
+export const SUBJECTS_CHANGED = 'subject_changed';
 export const IMAGE_PICKED = 'image_picked';
 export const STUDENT_CREATE_SUCCESS = 'student_create_success';
 export const STUDENT_CREATE_FAIL = 'student_create_fail';
+
+
+export const IMAGE_UPLOAD = 'image_upload';
+export const TURN_IMAGE_LOAD=  'turn_image_load';

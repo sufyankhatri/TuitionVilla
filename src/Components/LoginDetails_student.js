@@ -11,11 +11,7 @@ import {
 
 class LoginDetails extends Component {
 
-    SignInPressed = () => {
-        const { email, password, name, address, phone, cnic, age, Class, institute, subjects } = this.props;
-        this.props.signUpHandler({ email, password, name, address, phone, cnic, age, Class, institute, subjects });
-        
-    }
+   
 
     render() {
         return (
@@ -42,14 +38,7 @@ class LoginDetails extends Component {
                     <Text style={styles.textStyle}>Profile Picture</Text>
                     <PickImage />
                 </View>
-                {/* <View style={{ paddingBottom: 20 }}>
-                    <Button title='Sign Up'
-                        backgroundColor='#4d94ff'
-                        buttonStyle={styles.buttonStyle}
-                        onPress={this.SignInPressed}
-
-                    />
-                </View> */}
+              
 
 
             </ScrollView>
@@ -84,8 +73,8 @@ const styles = {
 };
 
 const mapStateToProps = (state) => {
-    const { email, password, name, address, phone, cnic, age, Class, institute, subjects } = state.student;;
-    return { email, password, name, address, phone, cnic, age, Class, institute, subjects }
+    const { email, password, name, address, phone, cnic, age, Class, institute, subjects, uri } = state.student;
+    return { email, password, name, address, phone, cnic, age, Class, institute, subjects , uri}
 }
 
 export default connect(mapStateToProps, { studentUpdate, signUpHandler })(LoginDetails)

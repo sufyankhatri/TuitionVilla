@@ -1,5 +1,6 @@
 import firebase from '@firebase/app';
 import '@firebase//database';
+import '@firebase//auth';
 import {
   STUDENT_UPDATE,
   STUDENT_CREATE_SUCCESS,
@@ -7,15 +8,11 @@ import {
   SIGNIN_USER,
   SIGNIN_USER_FAIL,
   SIGNIN_USER_SUCCESS,
-  IMAGE_PICKED
+  IMAGE_UPLOAD,
+  TURN_IMAGE_LOAD,
+  SUBJECTS_CHANGED
 } from './types';
 import { Actions } from 'react-native-router-flux';
-export const imagePicked = (uri, data) => {
-  return {
-    type: IMAGE_PICKED,
-    payload: { uri, data }
-  };
-};
 
 export const studentUpdate = ({ prop, value }) => {
   return {
@@ -24,48 +21,59 @@ export const studentUpdate = ({ prop, value }) => {
   };
 };
 
-export const signUpHandler = ({ email, password, name, phone, address, cnic, age, Class, institute, subjects }) => {
-
+export const signUpHandler = ({ email, password, name, phone, address, cnic, age, Class, institute, subjects, uri }) => {
+  //console.log(email, password, name, phone, address, cnic, age, Class, institute, subjects, uri);
   return (dispatch) => {
     dispatch({ type: SIGNIN_USER });
     firebase.auth().createUserWithEmailAndPassword(email, password)
       .then(
         () => {
-          
           const { currentUser } = firebase.auth();
-          console.log(currentUser.uid)
-
           firebase.database().ref(`/users/Students/${currentUser.uid}`)
-            .set({ name, email, phone, address, cnic, age, Class, institute, subjects, })
-            .then(() => {
-              dispatch({ type: STUDENT_CREATE_SUCCESS });
-              //Actions.timeline();
+            .set({ name, phone, address, cnic, age, Class, institute, subjects, uri })
+            .then(() => {//console.log("inside second .then()")
+
+              Actions.student_timeline();
+              return { type: STUDENT_CREATE_SUCCESS };
+             
             })
             .catch((err) => {
               dispatch({ type: STUDENT_CREATE_FAIL, payload: err })
             });
         })
-      .catch(() => signInUserFail(dispatch));
+      .catch(() => dispatch({
+        type: SIGNIN_USER_FAIL
+      }));
   };
 };
 
-const signStudentSuccess = (dispatch, user) => {
-  dispatch({
-    type: SIGNIN_USER_SUCCESS,
-    payload: user
-  });
+// const signStudentSuccess = (dispatch, user) => {
 
-}
-const signInUserFail = (dispatch) => {
-  dispatch({
-    type: SIGNIN_USER_FAIL
-  });
-};
-export const subjectsChanged = (condition, text) => {
+
+// }
+// const signInUserFail = (dispatch) => {
+//   dispatch({
+//     type: SIGNIN_USER_FAIL
+//   });
+// };
+export const subjectsChanged = ({condition, val}) => {
   return {
     type: SUBJECTS_CHANGED,
-    payload: { text, condition }
+    payload: { condition, val }
   };
 };
 
 
+export const UploadImage = (uri) => {
+
+  return {
+    type: IMAGE_UPLOAD,
+    payload: uri
+  };
+}
+export const TurnLoadImage = () => {
+  return {
+    type: TURN_IMAGE_LOAD,
+
+  };
+};

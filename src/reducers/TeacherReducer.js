@@ -3,7 +3,8 @@ import {
     TEACHER_CREATE,
     CLASS_INPUT,
     SUBJECT_INPUT,
-    SIGN_OUT
+    SIGN_OUT,
+    IMAGE_UPLOAD
 
 } from '../actions/types';
 
@@ -17,7 +18,8 @@ const INITIAL_STATE = {
     education: '',
     experience: '',
     classes: [],
-    subjects: []
+    subjects: [],
+    uri:''
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -25,7 +27,7 @@ export default (state = INITIAL_STATE, action) => {
         case TEACHER_UPDATE:
             return { ...state, [action.payload.prop]: action.payload.value };
         case TEACHER_CREATE:
-            return INITIAL_STATE;
+            return {...state, ...INITIAL_STATE};
         case CLASS_INPUT:
             var Class = state.classes;
             if (action.payload.condition === true) {
@@ -40,7 +42,7 @@ export default (state = INITIAL_STATE, action) => {
             return { ...state, classes: Class }
         case SUBJECT_INPUT:
             var Subject = state.subjects;
-            if (action.payload.condition === true) {
+            if (action.payload.condition) {
 
                 Subject.push(action.payload.val);
             }
@@ -50,8 +52,10 @@ export default (state = INITIAL_STATE, action) => {
             }
             return { ...state, subjects: Subject }
         case SIGN_OUT:
-            console.log("signed out!");
+            //console.log("signed out!");
             return {...state,...INITIAL_STATE}
+        case IMAGE_UPLOAD:
+            return{ ...state,uri: action.payload.uri }
         default:
             return state;
     }

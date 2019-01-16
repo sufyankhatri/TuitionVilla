@@ -7,6 +7,7 @@ import {
 
 const INITIAL_STATE = {
     SignInLoading: false,
+    error:''
 
 }
 
@@ -15,11 +16,11 @@ export default (state = INITIAL_STATE, action) => {
         case SIGNIN_USER:
             return { ...state, SignInLoading: true, error: '' };
         case SIGNIN_USER_SUCCESS:
-            return { ...state, ...INITIAL_STATE, user: action.payload };
+            return { ...state, ...INITIAL_STATE};
         case SIGNIN_USER_FAIL:
-            return { ...state, error: 'Error in Sign Up', password: '', SignInLoading: false };
+            return { ...state, error: 'Error in Sign Up', SignInLoading: false };
         case SIGN_OUT:
-            return { ...state, ...INITIAL_STATE };
+            return { ...state, INITIAL_STATE };
         default :
             return state;
     }

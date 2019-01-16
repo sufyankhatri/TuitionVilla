@@ -1,15 +1,11 @@
 import React, { Component } from 'react';
-import { Text, View, ScrollView } from 'react-native';
-import { FormInput} from 'react-native-elements';
-import {connect} from 'react-redux'
-import {
-    studentUpdate
-} from '../actions/StudentActions';
+import {  FormInput } from 'react-native-elements';
+import { teacherUpdate } from '../actions';
+import { Text, View, ScrollView, TouchableOpacity } from 'react-native';
+import { connect } from 'react-redux';
 
-class SignUp extends Component {
-
+class PersonalInfo extends Component {
     render() {
-        
         return (
             <ScrollView>
                 <View style={styles.containerStyle}>
@@ -17,15 +13,19 @@ class SignUp extends Component {
                     <FormInput
                         placeholder='Name'
                         inputStyle={styles.inputStyle}
-                        onChangeText={value => this.props.studentUpdate({ prop: 'name', value })}
+                        onChangeText={value => this.props.teacherUpdate({ prop: 'name', value })}
+                        value={this.props.name}
+
                     />
                 </View>
+
                 <View style={styles.containerStyle}>
                     <Text style={styles.textStyle}>Address</Text>
                     <FormInput
                         placeholder='Address'
                         inputStyle={styles.inputStyle}
-                        onChangeText={value => this.props.studentUpdate({ prop: 'address', value })}
+                        onChangeText={value => this.props.teacherUpdate({ prop: 'address', value })}
+                        value={this.props.address}
                     />
                 </View>
                 <View style={styles.containerStyle}>
@@ -33,16 +33,17 @@ class SignUp extends Component {
                     <FormInput
                         placeholder='Contact No..'
                         inputStyle={styles.inputStyle}
-                        onChangeText={value => this.props.studentUpdate({ prop: 'phone', value })}
+                        onChangeText={value => this.props.teacherUpdate({ prop: 'phone', value })}
+                        value={this.props.phone}
                     />
                 </View>
-
                 <Text style={styles.textStyle}>CNIC</Text>
                 <View style={styles.containerStyle}>
                     <FormInput
                         placeholder='CNIC'
                         inputStyle={styles.inputStyle}
-                        onChangeText={value => this.props.studentUpdate({ prop: 'cnic', value })}
+                        onChangeText={value => this.props.teacherUpdate({ prop: 'cnic', value })}
+                        value={this.props.cnic}
                     />
                 </View>
                 <View style={styles.containerStyle}>
@@ -50,41 +51,49 @@ class SignUp extends Component {
                     <FormInput
                         placeholder='Age'
                         inputStyle={styles.inputStyle}
-                        onChangeText={value => this.props.studentUpdate({ prop: 'age', value })}
+                        onChangeText={value => this.props.teacherUpdate({ prop: 'age', value })}
+                        value={this.props.age}
                     />
                 </View>
 
-                
             </ScrollView>
         );
-    }
+    };
+
 }
 
-const styles = {
+const styles={
     containerStyle: {
         paddingTop: 5,
-        paddingBottom: 5
+        paddingBottom: 10,
+        borderBottomWidth: 1,
+        marginBottom: 20,
+
     },
     inputStyle: {
         height: 50,
         backgroundColor: "#fff",
         borderColor: "#002966",
         borderWidth: 1,
-        borderRadius: 10,
+        borderRadius: 3,
         width: "100%",
         fontSize: 18,
+        fontWeight: '300',
         paddingLeft: 10
 
     },
     textStyle: {
         paddingLeft: 15,
         fontSize: 18,
+        fontWeight: 'bold',
         paddingBottom: 5
-    },
-    buttonStyle: {
-        borderRadius: 10,
-    },
+    }
 };
 
+const mapStateToProps = (state) => {
+    const { email, password, name, phone, address, cnic, age } = state.teacher;
 
-export default connect(null,{studentUpdate})(SignUp)
+    return { email, password, name, phone, address, cnic, age };
+};
+
+export default connect(mapStateToProps, { teacherUpdate })(PersonalInfo);

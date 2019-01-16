@@ -10,7 +10,8 @@ import {
     SIGNIN_USER,
     SIGNIN_USER_FAIL,
     SIGNIN_USER_SUCCESS,
-    SIGN_OUT
+    SIGN_OUT,
+    IMAGE_UPLOAD
 } from './types';
 export const teacherUpdate = ({ prop, value }) => {
     return {
@@ -28,18 +29,17 @@ export const signUser = ({ email, password, name, phone, address, cnic, age, edu
                 () => {
                     const { currentUser } = firebase.auth();
                     firebase.database().ref(`/users/Teachers/${currentUser.uid}`)
-                        .push({ name, phone, address, cnic, age, education, experience, subjects, classes })
+                        .set({ name, phone, address, cnic, age, education, experience, subjects, classes })
                         .then(() => {
-                            dispatch({ type: TEACHER_CREATE });
-                            Actions.timeline();
-
+                            Actions.teacher_timeline();
+                            return{ type: TEACHER_CREATE };
                         })
                         .catch(() => {
-                            signInUserFail(dispatch);
+                            return{ type: SIGNIN_USER_FAIL };
 
                         });
                 })
-            .catch(() => signInUserFail(dispatch));
+            .catch(() => dispatch({ type: SIGNIN_USER_FAIL }));
     };
 };
 
@@ -52,26 +52,12 @@ export const signOut = () => {
                 Actions.Login();
 
             })
-            .catch((error) => {
-                console.log(error);
+            .catch(() => {
+               // console.log(error);
             });
         };
 
     };
-    const signUserSuccess = (dispatch, user) => {
-
-
-        dispatch({
-            type: SIGNIN_USER_SUCCESS,
-            payload: user
-        });
-
-    }
-    const signInUserFail = (dispatch) => {
-        dispatch({ type: SIGNIN_USER_FAIL });
-    };
-
-
 
 
     export const ClassInput = ({ condition, val }) => {
@@ -88,4 +74,10 @@ export const signOut = () => {
         };
     }
 
-
+    export const UploadImage = ({uri})=>{
+        
+        return{
+            type: IMAGE_UPLOAD,
+            payload: uri
+        }
+    }

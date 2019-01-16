@@ -10,6 +10,7 @@ import AdditionalInfo_student from './AdditionalInfo_student';
 import Teacher_Timeline from './Teacher_Timeline';
 import Student_Timeline from './Student_Timeline';
 import WelcomeScreen from './WelcomeScreen';
+import PersonalInfo from './PersonalInfo';
 const Routes = () => {
   return (
     <Router>
@@ -20,21 +21,23 @@ const Routes = () => {
         navigationBarStyle={{ backgroundColor: '#16334c' }}
         titleStyle={{ color: '#fff' }}
       >
-        <Scene key="Login" component={Login} title="Please Login" hideNavBar={true} />
-        <Scene key="teacher_signup" component={SignUp} title="Personal Information" onRight={() => Actions.additionalInfo_teacher()}
+        <Scene key="Login" component={Login} title="Please Login" hideNavBar={true}  initial />
+        <Scene key="teacher_signup" component={SignUp} title="Step 1 of 3" onRight={() => Actions.personalInfo_teacher()}
           rightTitle="Next" />
+        <Scene key="personalInfo_teacher" component={PersonalInfo} title="Step 2 of 3" onRight={()=>Actions.additionalInfo_teacher()}
+        rightTitle="Next"/>
         <Scene key="additionalInfo_teacher" component={AdditionalInfo} title="Additional Information" />
         
-        <Scene key="loginDetailsStudent" component={LoginDetails_student} title="Step 1 of 3" onRight={()=>Actions.PersonalInfo_student()}
+        <Scene key="loginDetailsStudent" component={LoginDetails_student} title="Step 1 of 3" onRight={()=>Actions.personalInfo_student()}
         rightTitle= "Next"/>
-        <Scene key="personalInfo_student" component={PersonalInfo_student} title="Step 2 of 3" onRight={()=>Actions.AdditionalInfo_student()}
+        <Scene key="personalInfo_student" component={PersonalInfo_student} title="Step 2 of 3" onRight={()=>Actions.additionalInfo_student()}
         rightTitle="Next"/>
         <Scene key="additionalInfo_student" component={AdditionalInfo_student} title="Step 3 of 3" />
         <Scene key="teacher_timeline" component={Teacher_Timeline} title="TimeLine Teacher" />
         <Scene key="student_timeline" component={Student_Timeline} title="Student Timeline"/>
         
-        {/* <Scene key="welcomeScreen" component={WelcomeScreen} hideNavBar={true} />
-         */}
+        <Scene key="welcomeScreen" component={WelcomeScreen} hideNavBar={true} />
+        
         {/* <Scene key="profile" component={Profile} title="Profile" />  */}
       </Scene>
     </Router>

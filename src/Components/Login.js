@@ -4,10 +4,8 @@ import { FormInput, CheckBox } from 'react-native-elements';
 import { Actions } from 'react-native-router-flux';
 import Spinner from '../common/Spinner';
 import { connect } from 'react-redux';
-import { emailChanged, passwordChanged, loginUser, signUser, teacherState, studentState, checkState } from '../actions';
-
+import { emailChanged, passwordChanged, loginUser, teacherState, studentState } from '../actions';
 class Login extends Component {
-
     onEmailChange(text) {
         this.props.emailChanged(text);
     }
@@ -187,12 +185,12 @@ const styles = {
 
 
 
-const mapStateToProps = ({ auth }) => {
-    const { email, password, error, LogInLoading, teacher, student, checkState } = auth;
+const mapStateToProps = ( state ) => {
+    const { email, password, error, LogInLoading, teacher, student } = state.auth;
 
-    return { email, password, error, LogInLoading, teacher, student, checkState };
+    return { email, password, error, LogInLoading, teacher, student };
 };
 
 export default connect(mapStateToProps, {
-    emailChanged, passwordChanged, loginUser, teacherState, studentState, checkState
+    emailChanged, passwordChanged, loginUser, teacherState, studentState
 })(Login);

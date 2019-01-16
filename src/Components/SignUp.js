@@ -1,21 +1,20 @@
 import React, { Component } from 'react';
 import { Button, FormInput } from 'react-native-elements';
 import Input from '../common/Input';
-import { teacherUpdate }  from '../actions';
-import { Text, View, ScrollView, TouchableOpacity} from 'react-native';
+import { teacherUpdate } from '../actions';
+import { Text, View, ScrollView, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
-import {Actions}  from 'react-native-router-flux';
+import { Actions } from 'react-native-router-flux';
+import PickImage from './PickImage';
 class SignUp extends Component {
 
 
-    ImageClicked(){
-        Actions.gallery();
-    }
+    
     render() {
         return (
             <ScrollView>
                 <View style={styles.containerStyle}>
-                    
+
                     <Text style={styles.textStyle}>Email</Text>
                     <FormInput
                         placeholder='example@gmail.com'
@@ -36,61 +35,12 @@ class SignUp extends Component {
 
                     />
                 </View>
-              
-                <View>
-                <TouchableOpacity style={styles.ButtonStyle} onPress={this.ImageClicked.bind(this)}>
-                    <Text style={styles.buttonText}>Choose an Image</Text>
-                </TouchableOpacity>
-                </View>
-              
                 <View style={styles.containerStyle}>
-                    <Text style={styles.textStyle}>Your Name</Text>
-                    <FormInput
-                        placeholder='Name'
-                        inputStyle={styles.inputStyle}
-                        onChangeText={value => this.props.teacherUpdate({ prop: 'name', value })}
-                        value={this.props.name}
-
-                    />
+                    <Text style={styles.textStyle}>Profile Picture</Text>
+                    <PickImage />
                 </View>
 
-                <View style={styles.containerStyle}>
-                    <Text style={styles.textStyle}>Address</Text>
-                    <FormInput
-                        placeholder='Address'
-                        inputStyle={styles.inputStyle}
-                        onChangeText={value => this.props.teacherUpdate({ prop: 'address', value })}
-                        value={this.props.address}
-                    />
-                </View>
-                <View style={styles.containerStyle}>
-                    <Text style={styles.textStyle}>Contact Number</Text>
-                    <FormInput
-                        placeholder='Contact No..'
-                        inputStyle={styles.inputStyle}
-                        onChangeText={value => this.props.teacherUpdate({ prop: 'phone', value })}
-                        value={this.props.phone}
-                    />
-                </View>
-                <Text style={styles.textStyle}>CNIC</Text>
-                <View style={styles.containerStyle}>
-                    <FormInput
-                        placeholder='CNIC'
-                        inputStyle={styles.inputStyle}
-                        onChangeText={value => this.props.teacherUpdate({ prop: 'cnic', value })}
-                        value={this.props.cnic}
-                    />
-                </View>
-                <View style={styles.containerStyle}>
-                    <Text style={styles.textStyle}>Age</Text>
-                    <FormInput
-                        placeholder='Age'
-                        inputStyle={styles.inputStyle}
-                        onChangeText={value => this.props.teacherUpdate({ prop: 'age', value })}
-                        value={this.props.age}
-                    />
-                </View>
-            </ScrollView>
+                           </ScrollView>
         );
     }
 }
@@ -126,22 +76,7 @@ const styles = {
         fontSize: 18,
         color: '#fff'
 
-    },
-    ButtonStyle: {
-        paddingBottom: 10,
-        marginBottom: 10,
-        marginTop: 10,
-        paddingTop: 10,
-        paddingLeft: 10,
-        width: "100%",
-        borderWidth: 2,
-        borderRadius: 5,
-        borderColor: '#fff',
-        backgroundColor: '#000080'
-
-
     }
-
 };
 
 

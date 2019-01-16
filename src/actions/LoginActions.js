@@ -44,11 +44,12 @@ export const loginUser = ({ email, password, student, teacher }) => {
 
   return (dispatch) => {
     dispatch({ type: LOGIN_USER });
-
+    console.log("login User");
     firebase.auth().signInWithEmailAndPassword(email, password)
       .then(() => {
       
         dispatch({ type: LOGIN_USER_SUCCESS });
+
         if (student)
           Actions.student_timeline();
         if (teacher)
@@ -58,7 +59,9 @@ export const loginUser = ({ email, password, student, teacher }) => {
       })
       .catch(
         () => {
-          return { type: LOGIN_USER_FAIL };
+
+          console.log("failed!!");
+          dispatch({ type: LOGIN_USER_FAIL });
         });
 
   };
@@ -69,6 +72,5 @@ export const loginUser = ({ email, password, student, teacher }) => {
 
 // };
 
-const loginUserSuccess = (student, teacher) => {
-};
+
 
