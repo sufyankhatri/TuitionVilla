@@ -10,7 +10,9 @@ import {
   SIGNIN_USER_SUCCESS,
   IMAGE_UPLOAD,
   TURN_IMAGE_LOAD,
-  SUBJECTS_CHANGED
+  SUBJECTS_CHANGED,
+  STUDENT_FETCH_SUCCESS,
+  TEACHER_FETCH_SUCCESS
 } from './types';
 import { Actions } from 'react-native-router-flux';
 
@@ -30,7 +32,7 @@ export const signUpHandler = ({ email, password, name, phone, address, cnic, age
         () => {
           const { currentUser } = firebase.auth();
           firebase.database().ref(`/users/Students/${currentUser.uid}`)
-            .set({ name, phone, address, cnic, age, Class, institute, subjects, uri })
+            .set({ email, name, phone, address, cnic, age, Class, institute, subjects, uri })
             .then(() => {//console.log("inside second .then()")
 
               Actions.student_timeline();
@@ -47,21 +49,13 @@ export const signUpHandler = ({ email, password, name, phone, address, cnic, age
   };
 };
 
-// const signStudentSuccess = (dispatch, user) => {
 
-
-// }
-// const signInUserFail = (dispatch) => {
-//   dispatch({
-//     type: SIGNIN_USER_FAIL
-//   });
-// };
 export const subjectsChanged = ({condition, val}) => {
   return {
     type: SUBJECTS_CHANGED,
     payload: { condition, val }
   };
-};
+}
 
 
 export const UploadImage = (uri) => {
@@ -75,5 +69,16 @@ export const TurnLoadImage = () => {
   return {
     type: TURN_IMAGE_LOAD,
 
+  }
+}
+
+
+export const studentFetch = () => {
+  const {currentUser}= firebase.auth();
+  return (dispatch) =>{
+      firebase.database().ref(`/users/Students/${currentUser.uid}`)
+      .on('value', snapshot =>{
+          dispatch({ type: TEACHER_FETCH_SUCCESS, payload: snapshot.val()});
+      });
   };
-};
+}

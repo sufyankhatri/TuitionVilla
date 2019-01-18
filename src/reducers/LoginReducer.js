@@ -15,6 +15,7 @@ import {
     LOGIN_USER,
     TEACHER_STATE,
     STUDENT_STATE,
+    SIGN_OUT,
 
 } from '../actions/types';
 export default (state = INITIAL_STATE, action) => {
@@ -30,15 +31,13 @@ export default (state = INITIAL_STATE, action) => {
         case STUDENT_STATE:
             return { ...state, student: !state.student, teacher: false };
         case LOGIN_USER:
-            console.log("inside reducer login_user");
             return { ...state, LogInLoading: true, error: '' };
-
         case LOGIN_USER_SUCCESS:
-            console.log("login success R");
-            return { ...state, ...INITIAL_STATE/*, user: action.payload*/ };
+            return { ...state/*, user: action.payload*/ };
         case LOGIN_USER_FAIL:
-            console.log("login failed RR");
             return { ...state, error: 'Error in Log In', password: '', LogInLoading: false };
+        case SIGN_OUT:
+            return{...state,...INITIAL_STATE};
         default:
             return state;
     }

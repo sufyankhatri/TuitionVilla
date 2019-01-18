@@ -10,6 +10,7 @@ import {
   TEACHER_STATE,
   STUDENT_STATE
 } from './types';
+import {teacherFetch} from './TeacherActions';
 
 
 export const emailChanged = (text) => {
@@ -44,12 +45,11 @@ export const loginUser = ({ email, password, student, teacher }) => {
 
   return (dispatch) => {
     dispatch({ type: LOGIN_USER });
-    console.log("login User");
     firebase.auth().signInWithEmailAndPassword(email, password)
       .then(() => {
       
         dispatch({ type: LOGIN_USER_SUCCESS });
-
+        teacherFetch();
         if (student)
           Actions.student_timeline();
         if (teacher)

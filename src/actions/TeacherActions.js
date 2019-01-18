@@ -11,7 +11,8 @@ import {
     SIGNIN_USER_FAIL,
     SIGNIN_USER_SUCCESS,
     SIGN_OUT,
-    IMAGE_UPLOAD
+    IMAGE_UPLOAD,
+    TEACHER_FETCH_SUCCESS
 } from './types';
 export const teacherUpdate = ({ prop, value }) => {
     return {
@@ -20,17 +21,20 @@ export const teacherUpdate = ({ prop, value }) => {
     };
 };
 
-export const signUser = ({ email, password, name, phone, address, cnic, age, education, experience, subjects, classes }) => {
+export const signUser = ({ email, password, name, phone, address, cnic, age, education, experience, subjects, classes, uri }) => {
 
     return (dispatch) => {
         dispatch({ type: SIGNIN_USER });
         firebase.auth().createUserWithEmailAndPassword(email, password)
             .then(
                 () => {
+                    console.log(uri);
                     const { currentUser } = firebase.auth();
+                    console.log(currentUser.uid);
                     firebase.database().ref(`/users/Teachers/${currentUser.uid}`)
-                        .set({ name, phone, address, cnic, age, education, experience, subjects, classes })
+                        .set({ email, name, phone, address, cnic, age, education, experience, subjects, classes, uri })
                         .then(() => {
+                            console.log("inside .then()");
                             Actions.teacher_timeline();
                             return{ type: TEACHER_CREATE };
                         })
@@ -81,3 +85,13 @@ export const signOut = () => {
             payload: uri
         }
     }
+    export const teacherFetch = () => {
+        const {currentUser}= firebase.auth();
+        return (dispatch) =>{
+            firebase.database().ref(`/users/Teachers/${currentUser.uid}`)
+            .on('value', function(snapshot){
+                dispatch({ type: TEACHER_FETCH_SUCCESS, payload: snapshot.val()});
+            });
+        };
+    };
+    

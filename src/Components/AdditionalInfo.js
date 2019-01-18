@@ -27,8 +27,8 @@ class AdditionalInfo extends Component {
         this.setState({ checked: !this.state.checked });
     }
     SignInPressed() {
-        const { email, password, name, phone, address, cnic, age, education, experience, subjects, classes } = this.props;
-        this.props.signUser({ email, password, name, phone, address, cnic, age, education, experience, subjects, classes });
+        const { email, password, name, phone, address, cnic, age, education, experience, subjects, classes, uri } = this.props;
+        this.props.signUser({ email, password, name, phone, address, cnic, age, education, experience, subjects, classes, uri });
     }
 
     renderSignInButton() {
@@ -177,9 +177,9 @@ const styles = {
 
 const mapStateToProps = (state) => {
     const {  email, password, name, phone, address, cnic, age, education, experience, subjects, classes } = state.teacher;
-   
+    const{uri}= state.student;
     const {SignInLoading, error} = state.sign;
-    return { SignInLoading, email,error, password, name, phone, address, cnic, age, education, experience, subjects, classes };
+    return { SignInLoading, email,error, password, name, phone, address, cnic, age, education, experience, subjects, classes, uri };
 };
 
 export default connect(mapStateToProps, { teacherUpdate, ClassInput, SubjectInput, signUser })(AdditionalInfo);

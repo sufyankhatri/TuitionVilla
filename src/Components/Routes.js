@@ -15,29 +15,34 @@ const Routes = () => {
   return (
     <Router>
       <Scene key="root"
-        drawer={true}
-        contentComponent={drawer}
-        drawerWidth={200}
         navigationBarStyle={{ backgroundColor: '#16334c' }}
         titleStyle={{ color: '#fff' }}
       >
-        <Scene key="Login" component={Login} title="Please Login" hideNavBar={true}  initial />
-        <Scene key="teacher_signup" component={SignUp} title="Step 1 of 3" onRight={() => Actions.personalInfo_teacher()}
-          rightTitle="Next" />
-        <Scene key="personalInfo_teacher" component={PersonalInfo} title="Step 2 of 3" onRight={()=>Actions.additionalInfo_teacher()}
-        rightTitle="Next"/>
-        <Scene key="additionalInfo_teacher" component={AdditionalInfo} title="Additional Information" />
-        
-        <Scene key="loginDetailsStudent" component={LoginDetails_student} title="Step 1 of 3" onRight={()=>Actions.personalInfo_student()}
-        rightTitle= "Next"/>
-        <Scene key="personalInfo_student" component={PersonalInfo_student} title="Step 2 of 3" onRight={()=>Actions.additionalInfo_student()}
-        rightTitle="Next"/>
-        <Scene key="additionalInfo_student" component={AdditionalInfo_student} title="Step 3 of 3" />
-        <Scene key="teacher_timeline" component={Teacher_Timeline} title="TimeLine Teacher" />
-        <Scene key="student_timeline" component={Student_Timeline} title="Student Timeline"/>
-        
         <Scene key="welcomeScreen" component={WelcomeScreen} hideNavBar={true} />
+        <Scene key="Login" component={Login} title="Please Login" hideNavBar={true} initial />
+        <Scene key="personalInfo_teacher" component={PersonalInfo} title="Step 2 of 3" onRight={() => Actions.additionalInfo_teacher()}
+          rightTitle="Next" />
+        <Scene key="additionalInfo_teacher" component={AdditionalInfo} title="Additional Information" />
+
+        <Scene key="loginDetailsStudent" component={LoginDetails_student} title="Step 1 of 3" onRight={() => Actions.personalInfo_student()}
+          rightTitle="Next" />
+        <Scene key="personalInfo_student" component={PersonalInfo_student} title="Step 2 of 3" onRight={() => Actions.additionalInfo_student()}
+          rightTitle="Next" />
+        <Scene key="additionalInfo_student" component={AdditionalInfo_student} title="Step 3 of 3" />
+        <Scene drawer={true}
+          contentComponent={drawer}
+          drawerWidth={300}
+          titleStyle={{ color: '#fff'} }
+          hideNavBar
         
+        >
+          <Scene key="teacher_signup" component={SignUp} title="Step 1 of 3" onRight={() => Actions.personalInfo_teacher()}
+          rightTitle="Next" />
+        
+          <Scene key="teacher_timeline" component={Teacher_Timeline} title="TimeLine Teacher" />
+          <Scene key="student_timeline" component={Student_Timeline} title="Student Timeline" />
+        </Scene>
+
         {/* <Scene key="profile" component={Profile} title="Profile" />  */}
       </Scene>
     </Router>

@@ -4,7 +4,8 @@ import {
     CLASS_INPUT,
     SUBJECT_INPUT,
     SIGN_OUT,
-    IMAGE_UPLOAD
+    IMAGE_UPLOAD,
+    TEACHER_FETCH_SUCCESS
 
 } from '../actions/types';
 
@@ -19,7 +20,7 @@ const INITIAL_STATE = {
     experience: '',
     classes: [],
     subjects: [],
-    uri:''
+    uri: ''
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -27,7 +28,7 @@ export default (state = INITIAL_STATE, action) => {
         case TEACHER_UPDATE:
             return { ...state, [action.payload.prop]: action.payload.value };
         case TEACHER_CREATE:
-            return {...state, ...INITIAL_STATE};
+            return { ...state, ...INITIAL_STATE };
         case CLASS_INPUT:
             var Class = state.classes;
             if (action.payload.condition === true) {
@@ -51,11 +52,18 @@ export default (state = INITIAL_STATE, action) => {
 
             }
             return { ...state, subjects: Subject }
+        case TEACHER_FETCH_SUCCESS:
+            console.log("inside teacher fetch success");
+            console.log(action.payload.uri);
+            console.log(action.payload.email);
+            console.log(action.payload.name);
+            return{...state,uri:action.payload.uri, name:action.payload.name, email:action.payload.email}
         case SIGN_OUT:
             //console.log("signed out!");
-            return {...state,...INITIAL_STATE}
+            return { ...state, ...INITIAL_STATE }
         case IMAGE_UPLOAD:
-            return{ ...state,uri: action.payload.uri }
+            return { ...state, uri: action.payload.uri }
+
         default:
             return state;
     }

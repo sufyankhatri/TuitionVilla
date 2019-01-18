@@ -1,22 +1,30 @@
 import React, { Component } from 'react';
 import { Text, View, Image, TouchableOpacity } from 'react-native';
 import ListItem from './ListItem';
-export default class Student_Timeline extends Component {
+import {studentFetch} from '../actions/StudentActions';
+import {connect} from 'react-redux';
+
+class Student_Timeline extends Component {
+    componentDidMount(){
+        console.log("component will mount");
+        this.props.studentFetch(); 
+       }
+    PressFetch(){
+        this.props.studentFetch();
+    }
     render() {
         return(
+            
             <View>
-            <View  style={styles.containerStyle}>
-        
-               
-            </View>
-            <View>
-                
+            <TouchableOpacity onPress={()=>this.PressFetch()}>
+                <Text>hello</Text>
+                </TouchableOpacity>    
             <ListItem/>
             <ListItem/>
             <ListItem/>
             <ListItem/>
             </View>
-            </View>
+            
         );
     };
 }
@@ -29,3 +37,9 @@ const styles= {
 
     }
 }
+
+
+
+export default connect(null, {
+    studentFetch
+})(Student_Timeline);

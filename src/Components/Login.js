@@ -93,7 +93,6 @@ class Login extends Component {
                         <Text style={styles.errorTextStyle}>
                             {this.props.error}
                         </Text>
-
                     </View>
                     <View>
                         {this.renderLogInButton()}

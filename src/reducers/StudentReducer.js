@@ -6,7 +6,8 @@ import {
     IMAGE_UPLOAD,
     TURN_IMAGE_LOAD,
     SUBJECTS_CHANGED,
-    SIGN_OUT
+    SIGN_OUT,
+    STUDENT_FETCH_SUCCESS
 } from '../actions/types';
 
 const INITIAL_STATE = {
@@ -56,6 +57,11 @@ export default (state = INITIAL_STATE, action) => {
         case SIGN_OUT:
             //console.log("signed out!");
             return { ...state, ...INITIAL_STATE }
+        case STUDENT_FETCH_SUCCESS:
+            console.log(action.payload.uri);
+            console.log(action.payload.email);
+            console.log(action.payload.name);
+            return { ...state, uri: action.payload.uri, name: action.payload.name, email: action.payload.email };
         default:
             return state;
     }

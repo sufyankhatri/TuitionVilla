@@ -1,7 +1,13 @@
 import React, { Component } from 'react';
 import { Text, View, Image, TouchableOpacity } from 'react-native';
 import ListItem from './ListItem';
-export default class Teacher_Timeline extends Component {
+import {teacherFetch} from '../actions';
+import {connect} from 'react-redux';
+class Teacher_Timeline extends Component {
+componentDidMount(){
+    console.log("component did mount");
+    this.props.teacherFetch();
+}
     render() {
         return(
             <View>
@@ -29,3 +35,10 @@ const styles= {
 
     }
 }
+
+
+
+
+export default connect(null, {
+     teacherFetch
+})(Teacher_Timeline);

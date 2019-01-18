@@ -20,7 +20,7 @@ export default (state = INITIAL_STATE, action) => {
         case SIGNIN_USER_FAIL:
             return { ...state, error: 'Error in Sign Up', SignInLoading: false };
         case SIGN_OUT:
-            return { ...state, INITIAL_STATE };
+            return { ...state, ...INITIAL_STATE };
         default :
             return state;
     }
