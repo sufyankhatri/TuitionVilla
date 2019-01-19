@@ -12,7 +12,8 @@ import {
   TURN_IMAGE_LOAD,
   SUBJECTS_CHANGED,
   STUDENT_FETCH_SUCCESS,
-  TEACHER_FETCH_SUCCESS
+  TEACHER_FETCH_SUCCESS,
+  SELECTED_STUDENT_FETCH
 } from './types';
 import { Actions } from 'react-native-router-flux';
 
@@ -82,3 +83,12 @@ export const studentFetch = () => {
       });
   };
 }
+export const onSelectedStudent=(id)=>{
+  console.log("Id in action "+id);
+  return (dispatch) => {
+    firebase.database().ref(`/users/Students/`+id)
+      .on('value', snapshot => {
+        dispatch({ type: SELECTED_STUDENT_FETCH, payload: snapshot.val() });
+      });
+  };
+};
