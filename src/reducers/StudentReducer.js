@@ -7,7 +7,8 @@ import {
     TURN_IMAGE_LOAD,
     SUBJECTS_CHANGED,
     SIGN_OUT,
-    STUDENT_FETCH_SUCCESS
+    STUDENT_FETCH_SUCCESS,
+    SELECTED_STUDENT_FETCH
 } from '../actions/types';
 
 const INITIAL_STATE = {
@@ -25,13 +26,18 @@ const INITIAL_STATE = {
     image: null,
     error: "",
     uri: null,
-    imageLoading: false
+    imageLoading: false,
+    selectedStudent:null
 };
 
 
 export default (state = INITIAL_STATE, action) => {
 
     switch (action.type) {
+        
+        case SELECTED_STUDENT_FETCH:
+            console.log("fetched Student: "+action.payload);            
+            return{...state,selectedStudent:action.payload}
 
         case STUDENT_UPDATE:
             return { ...state, [action.payload.prop]: action.payload.value };
