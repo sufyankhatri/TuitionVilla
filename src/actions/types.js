@@ -21,6 +21,7 @@ export const IMAGE_PICKED = 'image_picked';
 export const STUDENT_CREATE_SUCCESS = 'student_create_success';
 export const STUDENT_CREATE_FAIL = 'student_create_fail';
 export const STUDENT_FETCH_SUCCESS= ' student_fetch_success';
+export const SELECTED_STUDENT_FETCH ="SELECTED_STUDENT_FETCH"
 
 export const IMAGE_UPLOAD = 'image_upload';
 export const TURN_IMAGE_LOAD=  'turn_image_load';
