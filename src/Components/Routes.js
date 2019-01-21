@@ -11,6 +11,9 @@ import Teacher_Timeline from './Teacher_Timeline';
 import Student_Timeline from './Student_Timeline';
 import WelcomeScreen from './WelcomeScreen';
 import PersonalInfo from './PersonalInfo';
+import Student_Profile from './Student_Profile';
+import Teacher_Profile from './Teacher_Profile';
+
 const Routes = () => {
   return (
     <Router>
@@ -41,9 +44,13 @@ const Routes = () => {
         
           <Scene key="teacher_timeline" component={Teacher_Timeline} title="TimeLine Teacher" />
           <Scene key="student_timeline" component={Student_Timeline} title="Student Timeline" />
+
         </Scene>
 
-        {/* <Scene key="profile" component={Profile} title="Profile" />  */}
+         <Scene key="student_profile" component={Student_Profile} title="Profile" />
+         <Scene key="student_profileSelected" component={Student_Profile} title="Profile"/>  
+         <Scene key="teacher_profile" component={Teacher_Profile} title="Teacher Profile" />
+         <Scene key="teacher_profileSelected" component={Teacher_Profile} title="Teacher Profile"/>  
       </Scene>
     </Router>
   );

@@ -12,7 +12,12 @@ import {
   TURN_IMAGE_LOAD,
   SUBJECTS_CHANGED,
   STUDENT_FETCH_SUCCESS,
-  TEACHER_FETCH_SUCCESS
+  TEACHER_FETCH_SUCCESS,
+  SELECTED_STUDENT_FETCH,
+  STUDENTS_FETCH_SUCCESS,
+  STUDENT_CHANGE_PROFILES
+
+  
 } from './types';
 import { Actions } from 'react-native-router-flux';
 
@@ -31,8 +36,9 @@ export const signUpHandler = ({ email, password, name, phone, address, cnic, age
       .then(
         () => {
           const { currentUser } = firebase.auth();
+          const uid = currentUser.uid;
           firebase.database().ref(`/users/Students/${currentUser.uid}`)
-            .set({ email, name, phone, address, cnic, age, Class, institute, subjects, uri })
+            .set({ uid, email, name, phone, address, cnic, age, Class, institute, subjects, uri })
             .then(() => {//console.log("inside second .then()")
 
               Actions.student_timeline();
@@ -81,4 +87,37 @@ export const studentFetch = () => {
           dispatch({ type: TEACHER_FETCH_SUCCESS, payload: snapshot.val()});
       });
   };
+}
+
+export const onSelectedStudent=(id)=>{
+  console.log("Id in action "+id);
+  return (dispatch) => {
+    firebase.database().ref(`/users/Students/`+id)
+      .on('value', snapshot => {
+        dispatch({ type: SELECTED_STUDENT_FETCH, payload: snapshot.val() });
+      });
+  };
+};
+
+export const studentsFetch = () => {
+  console.log("Fetching Student");
+  return (dispatch) => {
+    firebase.database().ref(`/users/Students`)
+      .on('value', snapshot => {
+        const studentsObj = snapshot.val();
+        const students = [];
+        for (let student in studentsObj) {
+          students.push(studentsObj[student])
+          //students[student]["id"]=student
+        }
+        dispatch({ type: STUDENTS_FETCH_SUCCESS, payload: students });
+      });
+  };
+};
+
+
+export const changeProfiles=(newData)=>{
+  return(dispatch)=>{
+    dispatch({ type: STUDENT_CHANGE_PROFILES, payload: newData });
+  }
 }

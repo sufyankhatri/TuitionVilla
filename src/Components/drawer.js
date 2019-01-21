@@ -11,6 +11,23 @@ class drawer extends Component {
 
         this.props.signOut();
     }
+
+    onHomePress(){
+        if(this.props.teacher){
+            Actions.teacher_timeline();
+        }
+        if(this.props.student){
+            Actions.student_timeline();
+        }
+
+    }
+
+    onProfilePress(){
+        
+
+    }
+
+
     render() {
         return (
             <View style={{ backgroundColor: '#2e2ed3', height: "100%" }}>
@@ -32,11 +49,11 @@ class drawer extends Component {
                             <Text style={styles.EmailTextStyle}>{this.props.email}</Text>
                         </View>
                     </View>
-                    <TouchableOpacity style={styles.ButtonStyle} onPress={() => { Actions.Information() }}>
+                    <TouchableOpacity style={styles.ButtonStyle} onPress={() => { this.onHomePress() }}>
                         <Icon name="home" type="ionicons" style={styles.iconStyle} color="#ff8533" />
                         <Text style={styles.element}>Home</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.ButtonStyle} onPress={() => { Actions.Information() }}>
+                    <TouchableOpacity style={styles.ButtonStyle} onPress={() => { this.onProfilePress() }}>
                         <Icon name="link" style={styles.iconStyle} color="#ff8533" />
                         <Text style={styles.element}>Profile</Text>
                     </TouchableOpacity>
@@ -108,12 +125,12 @@ const styles = {
 
 
 const mapStateToProps = (state) => {
-    const { signOut } = state.auth;
+    const { signOut,student, teacher } = state.auth;
     const { name, email, uri } = state.teacher
     //const{uri} = state.student;
     // if(uri===null)
     // let{uri} = state.teacher;
-    return { signOut, uri, name, email };
+    return { signOut, uri, name, email, student, teacher };
 };
 
 export default connect(mapStateToProps, {

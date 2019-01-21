@@ -11,16 +11,22 @@ export const SIGNIN_USER_FAIL = 'signIn_user_fail';
 export const SIGN_OUT = 'sign_out';
 export const TEACHER_UPDATE = 'teacher_update';
 export const TEACHER_CREATE = 'teacher_create';
-export const TEACHER_FETCH_SUCCESS= 'teacher_fetch_success';
+export const TEACHER_FETCH_SUCCESS = 'teacher_fetch_success';
 export const CLASS_INPUT = 'class_input';
 export const SUBJECT_INPUT = 'subject_input';
+export const TEACHERS_FETCH_SUCCESS = 'teachers_fetch_success';
+export const SELECTED_TEACHER_FETCH = 'selected_teacher_fetch';
+export const TEACHER_CHANGE_PROFILES='student_change_profiles';
 
 export const STUDENT_UPDATE = 'student_update';
 export const SUBJECTS_CHANGED = 'subject_changed';
 export const IMAGE_PICKED = 'image_picked';
 export const STUDENT_CREATE_SUCCESS = 'student_create_success';
 export const STUDENT_CREATE_FAIL = 'student_create_fail';
-export const STUDENT_FETCH_SUCCESS= ' student_fetch_success';
+export const STUDENT_FETCH_SUCCESS = ' student_fetch_success';
+export const SELECTED_STUDENT_FETCH = 'selected_student_fetch';
+export const STUDENTS_FETCH_SUCCESS = 'students_fetch_success';
+export const STUDENT_CHANGE_PROFILES='student_change_profiles';
 
 export const IMAGE_UPLOAD = 'image_upload';
-export const TURN_IMAGE_LOAD=  'turn_image_load';
+export const TURN_IMAGE_LOAD = 'turn_image_load';

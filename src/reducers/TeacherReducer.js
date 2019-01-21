@@ -5,7 +5,10 @@ import {
     SUBJECT_INPUT,
     SIGN_OUT,
     IMAGE_UPLOAD,
-    TEACHER_FETCH_SUCCESS
+    TEACHER_FETCH_SUCCESS,
+    TEACHERS_FETCH_SUCCESS,
+    SELECTED_TEACHER_FETCH,
+    TEACHER_CHANGE_PROFILES
 
 } from '../actions/types';
 
@@ -20,7 +23,10 @@ const INITIAL_STATE = {
     experience: '',
     classes: [],
     subjects: [],
-    uri: ''
+    uri: '',
+    teachers: [],
+    selectedTeacher: null,
+    profiles:[]
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -57,7 +63,14 @@ export default (state = INITIAL_STATE, action) => {
             console.log(action.payload.uri);
             console.log(action.payload.email);
             console.log(action.payload.name);
-            return{...state,uri:action.payload.uri, name:action.payload.name, email:action.payload.email}
+            return { ...state, uri: action.payload.uri, name: action.payload.name, email: action.payload.email }
+        case TEACHERS_FETCH_SUCCESS:
+            return { ...state, teachers: action.payload, profiles:action.payload };
+        case SELECTED_TEACHER_FETCH:
+            //console.log("fetched Student: " + action.payload);
+            return { ...state, selectedTeacher: action.payload }
+        case TEACHER_CHANGE_PROFILES:
+            return{...state, profiles:action.payload}
         case SIGN_OUT:
             //console.log("signed out!");
             return { ...state, ...INITIAL_STATE }

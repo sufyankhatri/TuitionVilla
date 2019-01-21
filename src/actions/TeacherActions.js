@@ -12,7 +12,10 @@ import {
     SIGNIN_USER_SUCCESS,
     SIGN_OUT,
     IMAGE_UPLOAD,
-    TEACHER_FETCH_SUCCESS
+    TEACHER_FETCH_SUCCESS,
+    TEACHERS_FETCH_SUCCESS,
+    SELECTED_TEACHER_FETCH,
+    TEACHER_CHANGE_PROFILES
 } from './types';
 export const teacherUpdate = ({ prop, value }) => {
     return {
@@ -36,10 +39,10 @@ export const signUser = ({ email, password, name, phone, address, cnic, age, edu
                         .then(() => {
                             console.log("inside .then()");
                             Actions.teacher_timeline();
-                            return{ type: TEACHER_CREATE };
+                            return { type: TEACHER_CREATE };
                         })
                         .catch(() => {
-                            return{ type: SIGNIN_USER_FAIL };
+                            return { type: SIGNIN_USER_FAIL };
 
                         });
                 })
@@ -57,41 +60,73 @@ export const signOut = () => {
 
             })
             .catch(() => {
-               // console.log(error);
+                // console.log(error);
             });
-        };
-
     };
 
+};
 
-    export const ClassInput = ({ condition, val }) => {
-        return {
-            type: CLASS_INPUT,
-            payload: { condition, val }
-        };
 
-    }
-    export const SubjectInput = ({ condition, val }) => {
-        return {
-            type: SUBJECT_INPUT,
-            payload: { condition, val }
-        };
-    }
-
-    export const UploadImage = ({uri})=>{
-        
-        return{
-            type: IMAGE_UPLOAD,
-            payload: uri
-        }
-    }
-    export const teacherFetch = () => {
-        const {currentUser}= firebase.auth();
-        return (dispatch) =>{
-            firebase.database().ref(`/users/Teachers/${currentUser.uid}`)
-            .on('value', function(snapshot){
-                dispatch({ type: TEACHER_FETCH_SUCCESS, payload: snapshot.val()});
-            });
-        };
+export const ClassInput = ({ condition, val }) => {
+    return {
+        type: CLASS_INPUT,
+        payload: { condition, val }
     };
+
+}
+export const SubjectInput = ({ condition, val }) => {
+    return {
+        type: SUBJECT_INPUT,
+        payload: { condition, val }
+    };
+}
+
+export const UploadImage = ({ uri }) => {
+
+    return {
+        type: IMAGE_UPLOAD,
+        payload: uri
+    }
+}
+export const teacherFetch = () => {
+    const { currentUser } = firebase.auth();
+    return (dispatch) => {
+        firebase.database().ref(`/users/Teachers/${currentUser.uid}`)
+            .on('value', function (snapshot) {
+                dispatch({ type: TEACHER_FETCH_SUCCESS, payload: snapshot.val() });
+            });
+    };
+};
+
+export const teachersFetch = () => {
     
+    return (dispatch) => {
+        firebase.database().ref(`/users/Teachers`)
+            .on('value', snapshot => {
+                const teachersObj = snapshot.val();
+                const teachers = [];
+                for (let teacher in teachersObj) {
+                    teachers.push(teachersObj[teacher])
+                    //students[student]["id"]=student
+                }
+                dispatch({ type: TEACHERS_FETCH_SUCCESS, payload: teachers });
+            });
+    };
+};
+
+export const onSelectedTeacher=(id)=>{
+    console.log("Id in action "+id);
+    return (dispatch) => {
+      firebase.database().ref(`/users/Teachers/`+id)
+        .on('value', snapshot => {
+          dispatch({ type: SELECTED_TEACHER_FETCH, payload: snapshot.val() });
+        });
+    };
+  };
+
+  export const changeProfiles=(newData)=>{
+    return(dispatch)=>{
+      dispatch({ type: TEACHER_CHANGE_PROFILES, payload: newData });
+    }
+  }
+  

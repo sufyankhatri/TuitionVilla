@@ -7,7 +7,10 @@ import {
     TURN_IMAGE_LOAD,
     SUBJECTS_CHANGED,
     SIGN_OUT,
-    STUDENT_FETCH_SUCCESS
+    STUDENT_FETCH_SUCCESS,
+    SELECTED_STUDENT_FETCH,
+    STUDENTS_FETCH_SUCCESS,
+    STUDENT_CHANGE_PROFILES
 } from '../actions/types';
 
 const INITIAL_STATE = {
@@ -24,8 +27,11 @@ const INITIAL_STATE = {
     student: null,
     image: null,
     error: "",
+    students: [],
     uri: null,
-    imageLoading: false
+    imageLoading: false,
+    selectedStudent: null,
+    profiles: []
 };
 
 
@@ -62,6 +68,13 @@ export default (state = INITIAL_STATE, action) => {
             console.log(action.payload.email);
             console.log(action.payload.name);
             return { ...state, uri: action.payload.uri, name: action.payload.name, email: action.payload.email };
+        case SELECTED_STUDENT_FETCH:
+            console.log("fetched Student: " + action.payload);
+            return { ...state, selectedStudent: action.payload }
+        case STUDENTS_FETCH_SUCCESS:
+            return { ...state, students: action.payload, profiles:action.payload };
+        case STUDENT_CHANGE_PROFILES:
+            return { ...state, profiles: action.payload }
         default:
             return state;
     }
