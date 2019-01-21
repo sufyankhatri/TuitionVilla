@@ -8,7 +8,8 @@ import {
     TEACHER_FETCH_SUCCESS,
     TEACHERS_FETCH_SUCCESS,
     SELECTED_TEACHER_FETCH,
-    TEACHER_CHANGE_PROFILES
+    TEACHER_CHANGE_PROFILES,
+    CURRENT_TEACHER_FETCH_SUCCESS
 
 } from '../actions/types';
 
@@ -76,6 +77,8 @@ export default (state = INITIAL_STATE, action) => {
             return { ...state, ...INITIAL_STATE }
         case IMAGE_UPLOAD:
             return { ...state, uri: action.payload.uri }
+        case CURRENT_TEACHER_FETCH_SUCCESS:
+            return{...state,selectedTeacher:action.payload}
 
         default:
             return state;

@@ -10,7 +10,8 @@ import {
     STUDENT_FETCH_SUCCESS,
     SELECTED_STUDENT_FETCH,
     STUDENTS_FETCH_SUCCESS,
-    STUDENT_CHANGE_PROFILES
+    STUDENT_CHANGE_PROFILES,
+    CURRENT_STUDENT_FETCH_SUCCESS
 } from '../actions/types';
 
 const INITIAL_STATE = {
@@ -75,6 +76,8 @@ export default (state = INITIAL_STATE, action) => {
             return { ...state, students: action.payload, profiles:action.payload };
         case STUDENT_CHANGE_PROFILES:
             return { ...state, profiles: action.payload }
+        case CURRENT_STUDENT_FETCH_SUCCESS:
+            return {...state,selectedStudent:action.payload}
         default:
             return state;
     }

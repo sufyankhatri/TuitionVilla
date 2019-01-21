@@ -15,7 +15,8 @@ import {
   TEACHER_FETCH_SUCCESS,
   SELECTED_STUDENT_FETCH,
   STUDENTS_FETCH_SUCCESS,
-  STUDENT_CHANGE_PROFILES
+  STUDENT_CHANGE_PROFILES,
+  CURRENT_STUDENT_FETCH_SUCCESS
 
   
 } from './types';
@@ -120,4 +121,15 @@ export const changeProfiles=(newData)=>{
   return(dispatch)=>{
     dispatch({ type: STUDENT_CHANGE_PROFILES, payload: newData });
   }
+}
+
+export const currentStudentFetch=()=>{
+  return (dispatch) => {
+    const {currentUser} = firebase.auth();
+    firebase.database().ref(`/users/Students/${currentUser.uid}`)
+      .on('value', snapshot => {
+        
+        dispatch({ type: CURRENT_STUDENT_FETCH_SUCCESS, payload: snapshot.val() });
+      });
+  };
 }

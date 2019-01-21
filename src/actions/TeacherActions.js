@@ -15,7 +15,8 @@ import {
     TEACHER_FETCH_SUCCESS,
     TEACHERS_FETCH_SUCCESS,
     SELECTED_TEACHER_FETCH,
-    TEACHER_CHANGE_PROFILES
+    TEACHER_CHANGE_PROFILES,
+    CURRENT_TEACHER_FETCH_SUCCESS
 } from './types';
 export const teacherUpdate = ({ prop, value }) => {
     return {
@@ -130,3 +131,13 @@ export const onSelectedTeacher=(id)=>{
     }
   }
   
+  export const currentTeacherFetch=()=>{
+    return (dispatch) => {
+      const {currentUser} = firebase.auth();
+      firebase.database().ref(`/users/Teachers/${currentUser.uid}`)
+        .on('value', snapshot => {
+          
+          dispatch({ type: CURRENT_TEACHER_FETCH_SUCCESS, payload: snapshot.val() });
+        });
+    };
+  }

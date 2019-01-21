@@ -3,10 +3,11 @@ import { TouchableOpacity, View, Text, Image } from 'react-native';
 import { Avatar } from 'react-native-elements';
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
-import { signOut, teacherFetch } from '../actions';
+import { signOut, teacherFetch, currentTeacherFetch } from '../actions';
+import {currentStudentFetch} from '../actions/StudentActions';
 import { Icon } from 'react-native-elements';
 class drawer extends Component {
-
+  
     SignOutPressed() {
 
         this.props.signOut();
@@ -23,7 +24,15 @@ class drawer extends Component {
     }
 
     onProfilePress(){
-        
+        if(this.props.teacher){
+            this.props.currentTeacherFetch();
+            Actions.teacher_profileSelected();
+        }
+        if(this.props.student){
+            this.props.currentStudentFetch();
+            Actions.student_profileSelected();
+        }
+
 
     }
 
@@ -134,5 +143,5 @@ const mapStateToProps = (state) => {
 };
 
 export default connect(mapStateToProps, {
-    signOut, teacherFetch
+    signOut, teacherFetch, currentStudentFetch, currentTeacherFetch
 })(drawer);

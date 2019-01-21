@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { View, FlatList, StyleSheet, ScrollView } from 'react-native'
 import {SearchBar} from 'react-native-elements'
 import { connect } from 'react-redux'
-import { studentFetch, studentsFetch, onSelectedStudent, changeProfiles } from '../actions/StudentActions'
+import { studentFetch, studentsFetch, onSelectedStudent, changeProfiles} from '../actions/StudentActions'
 import Student_Card from './Student_Card'
 import Loader from '../common/Spinner';
 import { List } from "react-native-elements"
@@ -15,7 +15,6 @@ export class Student_Timeline extends Component {
   };
 
   componentDidMount() {
-    
     this.props.studentsFetch();
     this.props.studentFetch();
     console.log("Profile")

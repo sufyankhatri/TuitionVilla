@@ -17,6 +17,7 @@ export const SUBJECT_INPUT = 'subject_input';
 export const TEACHERS_FETCH_SUCCESS = 'teachers_fetch_success';
 export const SELECTED_TEACHER_FETCH = 'selected_teacher_fetch';
 export const TEACHER_CHANGE_PROFILES='student_change_profiles';
+export const CURRENT_TEACHER_FETCH_SUCCESS='current_teacher_fetch_success';
 
 export const STUDENT_UPDATE = 'student_update';
 export const SUBJECTS_CHANGED = 'subject_changed';
@@ -27,6 +28,7 @@ export const STUDENT_FETCH_SUCCESS = ' student_fetch_success';
 export const SELECTED_STUDENT_FETCH = 'selected_student_fetch';
 export const STUDENTS_FETCH_SUCCESS = 'students_fetch_success';
 export const STUDENT_CHANGE_PROFILES='student_change_profiles';
+export const CURRENT_STUDENT_FETCH_SUCCESS='current_student_fetch_success';
 
 export const IMAGE_UPLOAD = 'image_upload';
 export const TURN_IMAGE_LOAD = 'turn_image_load';
