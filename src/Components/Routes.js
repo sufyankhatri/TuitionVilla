@@ -13,7 +13,9 @@ import WelcomeScreen from './WelcomeScreen';
 import PersonalInfo from './PersonalInfo';
 import Student_Profile from './Student_Profile';
 import Teacher_Profile from './Teacher_Profile';
-//import Chat from './Chat';
+//import {connect} from 'react-redux';
+import Chat from '../MashChat/Chat';
+import {Dimensions} from "react-native"
 const Routes = () => {
   return (
     <Router>
@@ -42,12 +44,13 @@ const Routes = () => {
           hideNavBar
           key="tabbar"
         >
-          <Scene key="teacher_timeline" component={Teacher_Timeline} title="TimeLine Teacher" />
+          <Scene key="teacher_timeline" component={Teacher_Timeline} title="Teacher Timeline" />
           <Scene key="student_timeline" component={Student_Timeline} title="Student Timeline" />
           <Scene key="student_profile" component={Student_Profile} title="Profile" />
           <Scene key="student_profileSelected" component={Student_Profile} title="Profile" />
           <Scene key="teacher_profile" component={Teacher_Profile} title="Teacher Profile" />
           <Scene key="teacher_profileSelected" component={Teacher_Profile} title="Teacher Profile" />
+          <Scene key="Chat" component={Chat} title="Chat"/>
            {/* <Scene key="Chat" component={Chat} title="Chat App"/> */}
         </Scene>
 
@@ -55,5 +58,10 @@ const Routes = () => {
     </Router>
   );
 };
+// const mapStateToProps = (state) => {
+//   const { teachers } = state.teacher
+//   return { teachers }
+// }
 
+// export default connect(mapStateToProps)(Routes);
 export default Routes;

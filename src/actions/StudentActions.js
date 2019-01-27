@@ -1,6 +1,7 @@
-import firebase from '@firebase/app';
-import '@firebase//database';
-import '@firebase//auth';
+// import firebase from '@firebase/app';
+// import '@firebase//database';
+// import '@firebase//auth';
+import firebase from '../config/FirebaseConfig';
 import {
   STUDENT_UPDATE,
   STUDENT_CREATE_SUCCESS,
@@ -81,8 +82,11 @@ export const TurnLoadImage = () => {
 
 
 export const studentFetch = () => {
+  console.log("inside student Fetch");
   const {currentUser}= firebase.auth();
+  console.log(currentUser.uid)
   return (dispatch) =>{
+      console.log("call to reducer");
       firebase.database().ref(`/users/Students/${currentUser.uid}`)
       .on('value', snapshot =>{
           dispatch({ type: TEACHER_FETCH_SUCCESS, payload: snapshot.val()});

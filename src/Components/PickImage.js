@@ -2,10 +2,10 @@ import React, { Component } from "react";
 import { View, Image, Button, StyleSheet } from "react-native";
 import ImagePicker,{showImagePicker} from 'react-native-image-picker';
 import RNFetchBlob from 'react-native-fetch-blob';
- import firebase from 'firebase';
+import firebase from 'firebase';
 //import '@firebase/storage';
 //import {firebase} from '../config/firebase';
-
+//import firebase from '../config/FirebaseConfig';
 import { connect } from 'react-redux'
 import { UploadImage, TurnLoadImage } from '../actions/StudentActions';
 import Spinner from '../common/Spinner';

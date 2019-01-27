@@ -1,6 +1,7 @@
 // import firebase from '@firebase/app';
 // import '@firebase//auth';
-import firebase from 'firebase';
+//import firebase from 'firebase';
+import firebase from '../config/FirebaseConfig';
 import { Actions } from 'react-native-router-flux';
 import {
   EMAIL_CHANGED,
@@ -12,6 +13,7 @@ import {
   STUDENT_STATE
 } from './types';
 import {teacherFetch} from './TeacherActions';
+import { studentFetch } from './StudentActions';
 
 
 export const emailChanged = (text) => {
@@ -50,13 +52,18 @@ export const loginUser = ({ email, password, student, teacher }) => {
       .then(() => {
       
         dispatch({ type: LOGIN_USER_SUCCESS });
-        teacherFetch();
+        console.log("Student:",student,"Teacher:",teacher);
         if (student)
+          {
+   //       studentFetch();
           Actions.student_timeline();
-        if (teacher)
+          console.log("Actions.student");
+          }
+        else if(teacher){
+     //     teacherFetch();
           Actions.teacher_timeline();
-
-
+          console.log("Actions.teacher");
+        }
       })
       .catch(
         () => {

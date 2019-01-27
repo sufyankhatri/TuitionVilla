@@ -13,6 +13,7 @@ class Login extends Component {
         this.props.passwordChanged(text);
     }
     onLogInPress() {
+        
         const { email, password, student, teacher } = this.props;
 
         this.props.loginUser({ email, password, student, teacher });

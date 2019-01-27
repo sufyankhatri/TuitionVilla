@@ -27,7 +27,8 @@ const INITIAL_STATE = {
     uri: '',
     teachers: [],
     selectedTeacher: null,
-    profiles:[]
+    profiles: [],
+    title: 'Title'
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -60,21 +61,23 @@ export default (state = INITIAL_STATE, action) => {
             }
             return { ...state, subjects: Subject }
         case TEACHER_FETCH_SUCCESS:
+            console.log("inside teacher fetch success");
+            console.log(action.payload.name);
             return { ...state, uri: action.payload.uri, name: action.payload.name, email: action.payload.email }
         case TEACHERS_FETCH_SUCCESS:
-            return { ...state, teachers: action.payload, profiles:action.payload };
+            return { ...state, teachers: action.payload, profiles: action.payload };
         case SELECTED_TEACHER_FETCH:
             //console.log("fetched Student: " + action.payload);
             return { ...state, selectedTeacher: action.payload }
         case TEACHER_CHANGE_PROFILES:
-            return{...state, profiles:action.payload}
+            return { ...state, profiles: action.payload }
         case SIGN_OUT:
             //console.log("signed out!");
             return { ...state, ...INITIAL_STATE }
         case IMAGE_UPLOAD:
             return { ...state, uri: action.payload.uri }
         case CURRENT_TEACHER_FETCH_SUCCESS:
-            return{...state,selectedTeacher:action.payload}
+            return { ...state, selectedTeacher: action.payload }
 
         default:
             return state;

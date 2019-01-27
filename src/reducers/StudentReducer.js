@@ -2,7 +2,6 @@ import {
     STUDENT_CREATE_SUCCESS,
     STUDENT_CREATE_FAIL,
     STUDENT_UPDATE,
-    IMAGE_PICKED,
     IMAGE_UPLOAD,
     TURN_IMAGE_LOAD,
     SUBJECTS_CHANGED,
@@ -32,7 +31,8 @@ const INITIAL_STATE = {
     uri: null,
     imageLoading: false,
     selectedStudent: null,
-    profiles: []
+    profiles: [],
+    title:''
 };
 
 

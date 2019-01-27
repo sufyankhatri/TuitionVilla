@@ -1,7 +1,7 @@
-import firebase from '@firebase/app';
-import '@firebase//database';
+// import firebase from '@firebase/app';
+// import '@firebase//database';
 import { Actions } from "react-native-router-flux";
-
+import firebase from '../config/FirebaseConfig';
 import {
     TEACHER_UPDATE,
     TEACHER_CREATE,
@@ -91,6 +91,7 @@ export const UploadImage = ({ uri }) => {
 }
 export const teacherFetch = () => {
     const { currentUser } = firebase.auth();
+    console.log("inside teacher fetch");
     return (dispatch) => {
         firebase.database().ref(`/users/Teachers/${currentUser.uid}`)
             .on('value', function (snapshot) {

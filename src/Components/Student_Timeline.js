@@ -14,11 +14,13 @@ export class Student_Timeline extends Component {
     loading: false,
     error: null
   };
-
+componentWillMount(){
+  this.props.studentFetch();
+}
   componentDidMount() {
     this.props.teachersFetch();
-    this.props.studentFetch();
-    console.log("Profile")
+    //this.props.studentFetch();
+    console.log("Student Timeline")
    // this.setState({ data: this.props.students })
     
   }

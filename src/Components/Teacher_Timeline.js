@@ -15,10 +15,13 @@ export class Teacher_Timeline extends Component {
     data: [],
   };
 
-  componentDidMount() {
+  componentWillMount(){
     this.props.teacherFetch();
+  }
+  componentDidMount() {
+   // this.props.teacherFetch();
     this.props.studentsFetch();
-    
+    console.log("Teacher timeline");
     // console.log("Profile")
     // if (this.props.teachers) {
     //   this.setState({ data: this.props.teachers })
