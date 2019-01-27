@@ -11,7 +11,7 @@ export class Teacher_Card extends Component {
     
     render() {
         return (
-            <View style={{ flex: 1, flexDirection: 'row', width: "100%", height: 100, backgroundColor: "#bdbae0", borderColor: "steelblue", borderWidth: 1, marginBottom: 10,borderRadius:10 }}>
+            <View style={{ flex: 1, flexDirection: 'row', width: "100%", height: 100, backgroundColor: "#e3e3ed", borderColor: "steelblue", borderWidth: 1, marginBottom: 10,borderRadius:10 }}>
                 <View style={{ width: "25%", height: "100%", paddingTop:10 }} >
                     <Avatar
                         large

@@ -34,9 +34,9 @@ export const signUser = ({ email, password, name, phone, address, cnic, age, edu
                 () => {
                     console.log(uri);
                     const { currentUser } = firebase.auth();
-                    console.log(currentUser.uid);
+                    const { uid } = currentUser.uid;
                     firebase.database().ref(`/users/Teachers/${currentUser.uid}`)
-                        .set({ email, name, phone, address, cnic, age, education, experience, subjects, classes, uri })
+                        .set({ email, name, phone, address, cnic, age, education, experience, subjects, classes, uri, uid })
                         .then(() => {
                             console.log("inside .then()");
                             Actions.teacher_timeline();
@@ -100,7 +100,7 @@ export const teacherFetch = () => {
 };
 
 export const teachersFetch = () => {
-    
+
     return (dispatch) => {
         firebase.database().ref(`/users/Teachers`)
             .on('value', snapshot => {
@@ -115,29 +115,29 @@ export const teachersFetch = () => {
     };
 };
 
-export const onSelectedTeacher=(id)=>{
-    console.log("Id in action "+id);
+export const onSelectedTeacher = (id) => {
+    console.log("Id in action " + id);
     return (dispatch) => {
-      firebase.database().ref(`/users/Teachers/`+id)
-        .on('value', snapshot => {
-          dispatch({ type: SELECTED_TEACHER_FETCH, payload: snapshot.val() });
-        });
+        firebase.database().ref(`/users/Teachers/` + id)
+            .on('value', snapshot => {
+                dispatch({ type: SELECTED_TEACHER_FETCH, payload: snapshot.val() });
+            });
     };
-  };
+};
 
-  export const changeProfiles=(newData)=>{
-    return(dispatch)=>{
-      dispatch({ type: TEACHER_CHANGE_PROFILES, payload: newData });
-    }
-  }
-  
-  export const currentTeacherFetch=()=>{
+export const TeacherChangeProfiles = (newData) => {
     return (dispatch) => {
-      const {currentUser} = firebase.auth();
-      firebase.database().ref(`/users/Teachers/${currentUser.uid}`)
-        .on('value', snapshot => {
-          
-          dispatch({ type: CURRENT_TEACHER_FETCH_SUCCESS, payload: snapshot.val() });
-        });
+        dispatch({ type: TEACHER_CHANGE_PROFILES, payload: newData });
+    }
+}
+
+export const currentTeacherFetch = () => {
+    return (dispatch) => {
+        const { currentUser } = firebase.auth();
+        firebase.database().ref(`/users/Teachers/${currentUser.uid}`)
+            .on('value', snapshot => {
+
+                dispatch({ type: CURRENT_TEACHER_FETCH_SUCCESS, payload: snapshot.val() });
+            });
     };
-  }
+}

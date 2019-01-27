@@ -2,7 +2,10 @@ import React, { Component } from "react";
 import { View, Image, Button, StyleSheet } from "react-native";
 import ImagePicker,{showImagePicker} from 'react-native-image-picker';
 import RNFetchBlob from 'react-native-fetch-blob';
-import firebase, { database } from 'firebase';
+ import firebase from 'firebase';
+//import '@firebase/storage';
+//import {firebase} from '../config/firebase';
+
 import { connect } from 'react-redux'
 import { UploadImage, TurnLoadImage } from '../actions/StudentActions';
 import Spinner from '../common/Spinner';
@@ -48,9 +51,9 @@ class PickImage extends Component {
     
     const imageKey = firebase.database().ref().child('images').push().key
     if(this.props.teacher)
-    return (firebase.storage().ref(`/users/Teachers`).child(`${imageKey}`))
+    return (firebase.storage().ref(`/users/Teachers`).child(`${imageKey}`+'.jpg'))
     if(this.props.student)
-    return (firebase.storage().ref(`/users/Students`).child(`${imageKey}`))
+    return (firebase.storage().ref(`/users/Students`).child(`${imageKey}`+'.jpg'))
   }
 
    uploadImage = (uri, mime = 'application/octet-stream') => {
@@ -85,7 +88,7 @@ class PickImage extends Component {
       .then((url) => {
         //resolve(url);
         //console.log(url);
-        // URL of the image uploaded on Firebase storage
+        // URL of the image uploaded on firebase storage
         this.props.UploadImage(url);
         //console.log(this.props.imageLoading);
       })

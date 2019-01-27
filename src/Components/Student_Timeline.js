@@ -2,20 +2,21 @@ import React, { Component } from 'react'
 import { View, FlatList, StyleSheet, ScrollView } from 'react-native'
 import {SearchBar} from 'react-native-elements'
 import { connect } from 'react-redux'
-import { studentFetch, studentsFetch, onSelectedStudent, changeProfiles} from '../actions/StudentActions'
+import { studentFetch, studentsFetch, onSelectedStudent} from '../actions/StudentActions'
+import { teacherFetch, teachersFetch, onSelectedTeacher,  TeacherChangeProfiles } from '../actions'
 import Student_Card from './Student_Card'
+import Teacher_Card from './Teacher_Card';
 import Loader from '../common/Spinner';
 import { List } from "react-native-elements"
 
 export class Student_Timeline extends Component {
   state = {
     loading: false,
-    error: null,
-    data: [],
+    error: null
   };
 
   componentDidMount() {
-    this.props.studentsFetch();
+    this.props.teachersFetch();
     this.props.studentFetch();
     console.log("Profile")
    // this.setState({ data: this.props.students })
@@ -24,9 +25,9 @@ export class Student_Timeline extends Component {
 
   renderRow({ item }) {
     return (
-      <Student_Card
+      <Teacher_Card
 
-        student={item}
+        teacher={item}
       // title={item.name}
       // subtitle={item.email}
       // onPress={() => {
@@ -39,13 +40,13 @@ export class Student_Timeline extends Component {
   }
 
   searchFilterFunction = text => {
-    const newData = this.props.students.filter(item => {
+    const newData = this.props.teachers.filter(item => {
       const itemData = `${item.name.toUpperCase()}`;
       const textData = text.toUpperCase();
 
       return itemData.indexOf(textData) > -1;
     });
-    this.props.changeProfiles(newData);
+    this.props.TeacherChangeProfiles(newData);
   };
 
   renderHeader = () => {
@@ -64,10 +65,10 @@ export class Student_Timeline extends Component {
 
   render() {
     let comp = <Loader />
-    let fetchStatus = "Student not fetched yet"
-    if (this.props.students.length > 0) {
-      fetchStatus = "Students Fetched"
-      console.log(this.props.students);
+    let fetchStatus = "Teacher not fetched yet"
+    if (this.props.teachers.length > 0) {
+      fetchStatus = "Teachers Fetched"
+      console.log(this.props.teacher);
       console.log(this.props.profiles);
       comp = (
         <List>
@@ -103,8 +104,9 @@ const styles = StyleSheet.create({
 })
 
 const mapStateToProps = (state) => {
-  const { students, profiles } = state.student
-  return { students, profiles }
+  const { students } = state.student
+  const{teachers, profiles} = state.teacher
+  return { students, profiles, teachers }
 }
 
-export default connect(mapStateToProps, {studentFetch, studentsFetch, onSelectedStudent, changeProfiles })(Student_Timeline)
+export default connect(mapStateToProps, {studentFetch, studentsFetch, onSelectedStudent, TeacherChangeProfiles, teacherFetch, teachersFetch, onSelectedTeacher })(Student_Timeline)

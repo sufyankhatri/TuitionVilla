@@ -2,8 +2,9 @@ import React, { Component } from 'react'
 import { View, FlatList, StyleSheet, ScrollView } from 'react-native'
 import {SearchBar} from 'react-native-elements'
 import { connect } from 'react-redux'
-import { teacherFetch, teachersFetch, onSelectedTeacher,  changeProfiles } from '../actions'
-import Teacher_Card from './Teacher_Card'
+import { teacherFetch, teachersFetch, onSelectedTeacher } from '../actions'
+import { studentFetch, studentsFetch, onSelectedStudent, changeProfiles} from '../actions/StudentActions'
+import Student_Card from './Student_Card'
 import Loader from '../common/Spinner';
 import { List } from "react-native-elements"
 
@@ -15,8 +16,9 @@ export class Teacher_Timeline extends Component {
   };
 
   componentDidMount() {
-    this.props.teachersFetch();
     this.props.teacherFetch();
+    this.props.studentsFetch();
+    
     // console.log("Profile")
     // if (this.props.teachers) {
     //   this.setState({ data: this.props.teachers })
@@ -25,9 +27,9 @@ export class Teacher_Timeline extends Component {
 
   renderRow({ item }) {
     return (
-      <Teacher_Card
+      <Student_Card
 
-        teacher={item}
+        student={item}
       // title={item.name}
       // subtitle={item.email}
       // onPress={() => {
@@ -40,7 +42,7 @@ export class Teacher_Timeline extends Component {
   }
 
   searchFilterFunction = text => {
-    const newData = this.props.teachers.filter(item => {
+    const newData = this.props.students.filter(item => {
       const itemData = `${item.name.toUpperCase()}`;
       const textData = text.toUpperCase();
 
@@ -65,9 +67,9 @@ export class Teacher_Timeline extends Component {
 
   render() {
     let comp = <Loader />
-    let fetchStatus = "Teacher not fetched yet"
-    if (this.props.teachers.length > 0) {
-      fetchStatus = "Teachers Fetched"
+    let fetchStatus = "Student not fetched yet"
+    if (this.props.students.length > 0) {
+      fetchStatus = "Students Fetched"
       comp = (
         <List>
           <FlatList
@@ -102,8 +104,9 @@ const styles = StyleSheet.create({
 })
 
 const mapStateToProps = (state) => {
-  const { teachers, profiles } = state.teacher
-  return { teachers, profiles }
+  const { teachers } = state.teacher
+  const {students, profiles}= state.student
+  return { teachers, profiles, students }
 }
 
-export default connect(mapStateToProps, {teacherFetch, teachersFetch, onSelectedTeacher,  changeProfiles })(Teacher_Timeline)
+export default connect(mapStateToProps, {teacherFetch, teachersFetch, onSelectedTeacher,  changeProfiles, studentFetch, studentsFetch, onSelectedStudent })(Teacher_Timeline)

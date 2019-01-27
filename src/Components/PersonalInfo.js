@@ -75,7 +75,7 @@ const styles={
         backgroundColor: "#fff",
         borderColor: "#002966",
         borderWidth: 1,
-        borderRadius: 3,
+        borderRadius: 10,
         width: "100%",
         fontSize: 18,
         fontWeight: '300',

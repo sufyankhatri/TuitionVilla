@@ -138,7 +138,7 @@ const styles = {
 
     },
     imageStyle: {
-        width: "95%",
+        width: "100%",
         height: "30%",
         paddingTop: 20
     },

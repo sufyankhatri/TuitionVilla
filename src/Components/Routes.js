@@ -13,7 +13,7 @@ import WelcomeScreen from './WelcomeScreen';
 import PersonalInfo from './PersonalInfo';
 import Student_Profile from './Student_Profile';
 import Teacher_Profile from './Teacher_Profile';
-
+//import Chat from './Chat';
 const Routes = () => {
   return (
     <Router>
@@ -21,8 +21,11 @@ const Routes = () => {
         navigationBarStyle={{ backgroundColor: '#16334c' }}
         titleStyle={{ color: '#fff' }}
       >
-        <Scene key="welcomeScreen" component={WelcomeScreen} hideNavBar={true} />
-        <Scene key="Login" component={Login} title="Please Login" hideNavBar={true} initial />
+        {/* <Scene key="welcomeScreen" component={WelcomeScreen} hideNavBar={true} />*/}
+        <Scene key="Login" component={Login} title="Please Login" hideNavBar={true} /> 
+
+        <Scene key="teacher_signup" component={SignUp} title="Step 1 of 3" onRight={() => Actions.personalInfo_teacher()}
+          rightTitle="Next" />
         <Scene key="personalInfo_teacher" component={PersonalInfo} title="Step 2 of 3" onRight={() => Actions.additionalInfo_teacher()}
           rightTitle="Next" />
         <Scene key="additionalInfo_teacher" component={AdditionalInfo} title="Additional Information" />
@@ -35,22 +38,19 @@ const Routes = () => {
         <Scene drawer={true}
           contentComponent={drawer}
           drawerWidth={300}
-          titleStyle={{ color: '#fff'} }
+          titleStyle={{ color: '#fff' }}
           hideNavBar
-        
+          key="tabbar"
         >
-          <Scene key="teacher_signup" component={SignUp} title="Step 1 of 3" onRight={() => Actions.personalInfo_teacher()}
-          rightTitle="Next" />
-        
           <Scene key="teacher_timeline" component={Teacher_Timeline} title="TimeLine Teacher" />
           <Scene key="student_timeline" component={Student_Timeline} title="Student Timeline" />
-
+          <Scene key="student_profile" component={Student_Profile} title="Profile" />
+          <Scene key="student_profileSelected" component={Student_Profile} title="Profile" />
+          <Scene key="teacher_profile" component={Teacher_Profile} title="Teacher Profile" />
+          <Scene key="teacher_profileSelected" component={Teacher_Profile} title="Teacher Profile" />
+           {/* <Scene key="Chat" component={Chat} title="Chat App"/> */}
         </Scene>
 
-         <Scene key="student_profile" component={Student_Profile} title="Profile" />
-         <Scene key="student_profileSelected" component={Student_Profile} title="Profile"/>  
-         <Scene key="teacher_profile" component={Teacher_Profile} title="Teacher Profile" />
-         <Scene key="teacher_profileSelected" component={Teacher_Profile} title="Teacher Profile"/>  
       </Scene>
     </Router>
   );

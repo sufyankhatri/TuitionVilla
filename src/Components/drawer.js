@@ -4,31 +4,31 @@ import { Avatar } from 'react-native-elements';
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import { signOut, teacherFetch, currentTeacherFetch } from '../actions';
-import {currentStudentFetch} from '../actions/StudentActions';
+import { currentStudentFetch } from '../actions/StudentActions';
 import { Icon } from 'react-native-elements';
 class drawer extends Component {
-  
+
     SignOutPressed() {
 
         this.props.signOut();
     }
 
-    onHomePress(){
-        if(this.props.teacher){
+    onHomePress() {
+        if (this.props.teacher) {
             Actions.teacher_timeline();
         }
-        if(this.props.student){
+        if (this.props.student) {
             Actions.student_timeline();
         }
 
     }
 
-    onProfilePress(){
-        if(this.props.teacher){
+    onProfilePress() {
+        if (this.props.teacher) {
             this.props.currentTeacherFetch();
             Actions.teacher_profileSelected();
         }
-        if(this.props.student){
+        if (this.props.student) {
             this.props.currentStudentFetch();
             Actions.student_profileSelected();
         }
@@ -43,13 +43,13 @@ class drawer extends Component {
                 <View style={styles.containerStyle}>
                     <View style={{ flexDirection: 'row', marginBottom: 40, backgroundColor: '#1515c4', height: 130 }}>
                         <View style={styles.imageContainer}>
-                             <Avatar
+                            <Avatar
                                 rounded
-                                avatarStyle={{height:100, width:100,borderRadius:50}}
-                                source={{ uri: "https://firebasestorage.googleapis.com/v0/b/tuitionvilla-fa8dd.appspot.com/o/users%2FTeachers%2F-LWWO1ixpXMp-MePGNoi?alt=media&token=e7374d4e-096b-4629-a991-c462eb4c2806" }}
-                                
-                            /> 
-                            
+                                avatarStyle={{ height: 100, width: 100, borderRadius: 50 }}
+                                source={{ uri: this.props.uri  }}
+
+                            />
+
                         </View>
                         <View style={{ flexDirection: 'column', marginTop: 20 }}>
 
@@ -87,7 +87,7 @@ const styles = {
     imageContainer: {
         marginLeft: 40,
         marginTop: 50,
-        
+
 
 
     },
@@ -134,7 +134,7 @@ const styles = {
 
 
 const mapStateToProps = (state) => {
-    const { signOut,student, teacher } = state.auth;
+    const { signOut, student, teacher } = state.auth;
     const { name, email, uri } = state.teacher
     //const{uri} = state.student;
     // if(uri===null)
