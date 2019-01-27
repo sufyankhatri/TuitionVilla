@@ -38,6 +38,7 @@ export class Student_Card extends Component {
                         />
                     </TouchableOpacity>
                     <TouchableOpacity onPress={() => {
+                        this.props.onSelectedStudent(this.props.student.uid)
                         Actions.Chat({
                             name: this.props.student.uri
                         })

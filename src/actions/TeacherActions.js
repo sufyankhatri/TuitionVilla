@@ -123,6 +123,7 @@ export const onSelectedTeacher = (id) => {
             .on('value', snapshot => {
                 dispatch({ type: SELECTED_TEACHER_FETCH, payload: snapshot.val() });
             });
+            
     };
 };
 

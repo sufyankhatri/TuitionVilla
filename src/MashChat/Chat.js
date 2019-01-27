@@ -1,6 +1,7 @@
 import React from 'react';
 import Backend from './Backend';
 import { GiftedChat } from 'react-native-gifted-chat';
+import {connect} from 'react-redux';
 //import {StackNavigator} from 'react-navigator';
 //import Home from './Home';
 
@@ -12,24 +13,26 @@ const AppStackNavigator = new StackNavigator({
   LoginScreen: { screen: App },
 });
 */
-export default class Chat extends React.Component {
+class Chat extends React.Component {
   state = {
     messages: [],
   };
   componentWillMount() {
-
+    
   }
   render() {
     return (
+      
       <GiftedChat
         messages={this.state.messages}
         onSend={(message) => {
           Backend.sendMessage(message);
         }}
         user={{
-          _id: Backend.getUid(),
+          _id: this.props.uid,
           //name: 'android',
           //name from khatri code
+          
           name: this.props.name,
         }}
       />
@@ -46,6 +49,19 @@ export default class Chat extends React.Component {
     });
   }
   componentWillUnmount() {
+//    console.log("current user id:")
+ //   console.log(c_id)
     Backend.closeChat();
   }
 }
+mapStateToProps=(state)=>{
+  const{selectedTeacher,name, uid}= state.teacher
+  //const {selectedStudent}= state.student
+  console.log(selectedTeacher.uid)
+  const{t_id}=selectedTeacher.uid
+//  const{s_id}= selectedStudent.uid
+ // console.log(s_id)
+  return{t_id,name, uid}
+}
+
+export default connect(mapStateToProps)(Chat)

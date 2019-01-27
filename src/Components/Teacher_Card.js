@@ -38,7 +38,9 @@ export class Teacher_Card extends Component {
                         />
                     </TouchableOpacity>
                     <TouchableOpacity onPress={() => {
-                        console.log("Chat: " + this.props.teacher.name)
+                        //    console.log("Chat: " + this.props.teacher.name)
+                        this.props.onSelectedTeacher(this.props.teacher.uid)
+
                         Actions.Chat({
                             name: this.props.teacher.name
                         })

@@ -6,15 +6,15 @@ class Backend {
   // initialize Firebase Backend
   
   constructor() {
-    firebase.auth().onAuthStateChanged((user) => {
-      if (user) {
-        this.setUid(user.uid);
-      } else {
-        firebase.auth().signInAnonymously().catch((error) => {
-          alert(error.message);
-        });
-      }
-    });
+  //   firebase.auth().onAuthStateChanged((user) => {
+  //     if (user) {
+  //       this.setUid(user.uid);
+  //     } else {
+  //       firebase.auth().signInAnonymously().catch((error) => {
+  //         alert(error.message);
+  //       });
+  //     }
+  //   });
   }
   setUid(value) {
     this.uid = value;
@@ -48,6 +48,7 @@ class Backend {
         text: message[i].text,
         user: message[i].user,
         createdAt: today.getDate(),
+       //createdAt: firebase.database.ServerValue.TIMESTAMP
       });
     }
   }
