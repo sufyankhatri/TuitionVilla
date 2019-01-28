@@ -50,12 +50,13 @@ export const loginUser = ({ email, password, student, teacher }) => {
     dispatch({ type: LOGIN_USER });
     firebase.auth().signInWithEmailAndPassword(email, password)
       .then(() => {
-      
-        dispatch({ type: LOGIN_USER_SUCCESS });
+        const{currentUser} = firebase.auth()
+        uid=currentUser.uid
+        dispatch({ type: LOGIN_USER_SUCCESS, payload:uid });
         console.log("Student:",student,"Teacher:",teacher);
         if (student)
           {
-   //       studentFetch();
+         // studentFetch();
           Actions.student_timeline();
           console.log("Actions.student");
           }

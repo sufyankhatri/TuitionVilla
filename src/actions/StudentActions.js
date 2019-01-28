@@ -82,14 +82,12 @@ export const TurnLoadImage = () => {
 
 
 export const studentFetch = () => {
-  console.log("inside student Fetch");
   const {currentUser}= firebase.auth();
-  console.log(currentUser.uid)
   return (dispatch) =>{
       console.log("call to reducer");
       firebase.database().ref(`/users/Students/${currentUser.uid}`)
-      .on('value', snapshot =>{
-          dispatch({ type: TEACHER_FETCH_SUCCESS, payload: snapshot.val()});
+      .on(('value'), snapshot =>{
+          dispatch({ type: STUDENT_FETCH_SUCCESS, payload: snapshot.val()});
       });
   };
 }

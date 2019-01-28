@@ -5,7 +5,8 @@ const INITIAL_STATE = {
     error: '',
     LogInLoading: false,
     teacher: false,
-    student: true
+    student: true,
+    uid:''
 };
 import {
     EMAIL_CHANGED,
@@ -33,7 +34,7 @@ export default (state = INITIAL_STATE, action) => {
         case LOGIN_USER:
             return { ...state, LogInLoading: true, error: '' };
         case LOGIN_USER_SUCCESS:
-            return { ...state/*, user: action.payload*/ };
+            return { ...state,uid:action.payload/*, user: action.payload*/ };
         case LOGIN_USER_FAIL:
             return { ...state, error: 'Error in Log In', password: '', LogInLoading: false };
         case SIGN_OUT:

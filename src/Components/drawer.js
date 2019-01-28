@@ -38,6 +38,14 @@ class drawer extends Component {
 
 
     render() {
+
+        let emailFont=16;
+        if(this.props.email){
+            if(this.props.email.length>14){
+                emailFont=9
+            }
+            console.log("Email Length:"+this.props.email.length)
+        }
         return (
             <View style={{ backgroundColor: '#2e2ed3', height: "100%" }}>
                 <View style={styles.containerStyle}>
@@ -55,7 +63,7 @@ class drawer extends Component {
 
                             <Text style={styles.NameTextStyle}>{this.props.name}</Text>
 
-                            <Text style={styles.EmailTextStyle}>{this.props.email}</Text>
+                            <Text style={[styles.EmailTextStyle,{fontSize:emailFont}]}>{this.props.email}</Text>
                         </View>
                     </View>
                     <TouchableOpacity style={styles.ButtonStyle} onPress={() => { this.onHomePress() }}>
@@ -66,7 +74,7 @@ class drawer extends Component {
                         <Icon name="link" style={styles.iconStyle} color="#ff8533" />
                         <Text style={styles.element}>Profile</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.ButtonStyle} onPress={() => { Actions.additionalInfo() }}>
+                    <TouchableOpacity style={styles.ButtonStyle} onPress={() => { Actions.Chat() }}>
                         <Icon name="message-text" type="material-community" iconStyle={styles.iconStyle} />
                         <Text style={styles.element}>Messages</Text>
                     </TouchableOpacity>
@@ -134,12 +142,24 @@ const styles = {
 
 
 const mapStateToProps = (state) => {
-    const { signOut, student, teacher } = state.auth;
+    const{student,teacher,signOut}=state.auth
+    if(student){
+    const { name, email, uri } = state.student
+    console.log("sname:",name,"semail:",email,"suri",uri)  
+    return { signOut, uri, name, email, student, teacher };
+} 
+     else if(teacher){
     const { name, email, uri } = state.teacher
+    console.log("teacher name:",name,"teacher email:",email,"teacher uri:",uri)
+    return { signOut, uri, name, email, student, teacher };
+
+}
+    //const { signOut, student, teacher } = state.auth;
+
     //const{uri} = state.student;
     // if(uri===null)
     // let{uri} = state.teacher;
-    return { signOut, uri, name, email, student, teacher };
+  
 };
 
 export default connect(mapStateToProps, {

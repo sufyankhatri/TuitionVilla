@@ -2,13 +2,18 @@ import React, { Component } from 'react';
 import { Button, FormInput } from 'react-native-elements';
 import Input from '../common/Input';
 import { teacherUpdate } from '../actions';
-import { Text, View, ScrollView, TouchableOpacity } from 'react-native';
+import { Text, View, ScrollView, TouchableOpacity, BackHandler } from 'react-native';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 import PickImage from './PickImage';
 class SignUp extends Component {
 
-
+    componentDidMount(){
+        this.backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
+            Actions.Login(); // works best when the goBack is async
+            return true;
+          });
+    }
     
     render() {
         return (

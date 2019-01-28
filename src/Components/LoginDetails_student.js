@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, ScrollView, View } from 'react-native';
+import { Text, ScrollView, View, BackHandler } from 'react-native';
 import { Button, FormInput } from 'react-native-elements';
 import PickImage from './PickImage';
 import { connect } from 'react-redux';
@@ -8,11 +8,16 @@ import {
     signUpHandler,
 
 } from '../actions/StudentActions';
-
+import {Actions} from 'react-native-router-flux'
 class LoginDetails extends Component {
 
-   
-
+    componentDidMount(){
+        this.backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
+            Actions.Login(); // works best when the goBack is async
+            return true;
+          });
+    }
+    
     render() {
         return (
             <ScrollView>

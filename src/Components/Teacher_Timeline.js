@@ -1,13 +1,13 @@
 import React, { Component } from 'react'
-import { View, FlatList, StyleSheet, ScrollView } from 'react-native'
-import {SearchBar} from 'react-native-elements'
+import { View, FlatList, StyleSheet, ScrollView, BackHandler } from 'react-native'
+import { SearchBar } from 'react-native-elements'
 import { connect } from 'react-redux'
 import { teacherFetch, teachersFetch, onSelectedTeacher } from '../actions'
-import { studentFetch, studentsFetch, onSelectedStudent, changeProfiles} from '../actions/StudentActions'
+import { studentFetch, studentsFetch, onSelectedStudent, changeProfiles } from '../actions/StudentActions'
 import Student_Card from './Student_Card'
 import Loader from '../common/Spinner';
 import { List } from "react-native-elements"
-
+import {Actions} from 'react-native-router-flux'
 export class Teacher_Timeline extends Component {
   state = {
     loading: false,
@@ -16,9 +16,14 @@ export class Teacher_Timeline extends Component {
   };
 
   componentDidMount() {
+    this.backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
+      Actions.teacher_timeline(); // works best when the goBack is async
+      return true;
+    });
     this.props.teacherFetch();
     this.props.studentsFetch();
     console.log("Teacher timeline");
+
     // console.log("Profile")
     // if (this.props.teachers) {
     //   this.setState({ data: this.props.teachers })
@@ -78,7 +83,7 @@ export class Teacher_Timeline extends Component {
             keyExtractor={item => item.email}
             ItemSeparatorComponent={this.renderSeparator}
             ListHeaderComponent={this.renderHeader}
-            //keyExtractor={item => item.email}
+          //keyExtractor={item => item.email}
           />
         </List>
 
@@ -105,8 +110,9 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = (state) => {
   const { teachers } = state.teacher
-  const {students, profiles}= state.student
-  return { teachers, profiles, students }
+  const { students, profiles } = state.student
+  const { student, teacher } = state.auth
+  return { teachers, profiles, students, student, teacher }
 }
 
-export default connect(mapStateToProps, {teacherFetch, teachersFetch, onSelectedTeacher,  changeProfiles, studentFetch, studentsFetch, onSelectedStudent })(Teacher_Timeline)
+export default connect(mapStateToProps, { teacherFetch, teachersFetch, onSelectedTeacher, changeProfiles, studentFetch, studentsFetch, onSelectedStudent })(Teacher_Timeline)

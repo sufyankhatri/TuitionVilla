@@ -1,7 +1,9 @@
 import React from 'react';
+import { BackHandler } from 'react-native';
 import Backend from './Backend';
 import { GiftedChat } from 'react-native-gifted-chat';
 import {connect} from 'react-redux';
+import {Actions} from 'react-native-router-flux'
 //import {StackNavigator} from 'react-navigator';
 //import Home from './Home';
 
@@ -40,6 +42,12 @@ class Chat extends React.Component {
     );
   }
   componentDidMount() {
+    if(this.props.student){
+        this.backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
+          Actions.student_timeline(); // works best when the goBack is async
+          return true;
+        });
+      }
     Backend.loadMessages((message) => {
       this.setState((previousState) => {
         return {
@@ -55,13 +63,14 @@ class Chat extends React.Component {
   }
 }
 mapStateToProps=(state)=>{
-  const{selectedTeacher,name, uid}= state.teacher
+  const{name}= state.teacher
+  const{uid, student}=state.auth
   //const {selectedStudent}= state.student
-  console.log(selectedTeacher.uid)
-  const{t_id}=selectedTeacher.uid
+  //console.log(selectedTeacher.uid)
+  //const{t_id}=selectedTeacher.uid
 //  const{s_id}= selectedStudent.uid
  // console.log(s_id)
-  return{t_id,name, uid}
+  return{name, uid, student}
 }
 
 export default connect(mapStateToProps)(Chat)

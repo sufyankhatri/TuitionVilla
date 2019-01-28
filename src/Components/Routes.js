@@ -26,17 +26,17 @@ const Routes = () => {
         {/* <Scene key="welcomeScreen" component={WelcomeScreen} hideNavBar={true} />*/}
         <Scene key="Login" component={Login} title="Please Login" hideNavBar={true} /> 
 
-        <Scene key="teacher_signup" component={SignUp} title="Step 1 of 3" onRight={() => Actions.personalInfo_teacher()}
-          rightTitle="Next" />
-        <Scene key="personalInfo_teacher" component={PersonalInfo} title="Step 2 of 3" onRight={() => Actions.additionalInfo_teacher()}
-          rightTitle="Next" />
-        <Scene key="additionalInfo_teacher" component={AdditionalInfo} title="Additional Information" />
+        <Scene key="teacher_signup" component={SignUp} title="Step 1 of 3" onRight={() => Actions.personalInfoTeacher()}
+          rightTitle="Next" onBack={()=>Actions.Login()}/>
+        <Scene key="personalInfoTeacher" component={PersonalInfo} title="Step 2 of 3" onRight={() => Actions.additionalInfo_teacher()}
+          rightTitle="Next" onBack={()=>Actions.teacher_signup()}/>
+        <Scene key="additionalInfo_teacher" component={AdditionalInfo} title="Step 3 of 3" onBack={()=>Actions.personalInfo_teacher()}/>
 
         <Scene key="loginDetailsStudent" component={LoginDetails_student} title="Step 1 of 3" onRight={() => Actions.personalInfo_student()}
-          rightTitle="Next" />
+          rightTitle="Next" onBack={()=>Actions.Login()} />
         <Scene key="personalInfo_student" component={PersonalInfo_student} title="Step 2 of 3" onRight={() => Actions.additionalInfo_student()}
-          rightTitle="Next" />
-        <Scene key="additionalInfo_student" component={AdditionalInfo_student} title="Step 3 of 3" />
+          rightTitle="Next" onBack={()=>Actions.loginDetailsStudent()}/>
+        <Scene key="additionalInfo_student" component={AdditionalInfo_student} title="Step 3 of 3" onBack={()=>Actions.personalInfo_student()}/>
         <Scene drawer={true}
           contentComponent={drawer}
           drawerWidth={300}
@@ -47,10 +47,10 @@ const Routes = () => {
           <Scene key="teacher_timeline" component={Teacher_Timeline} title="Teacher Timeline" />
           <Scene key="student_timeline" component={Student_Timeline} title="Student Timeline" />
           <Scene key="student_profile" component={Student_Profile} title="Profile" />
-          <Scene key="student_profileSelected" component={Student_Profile} title="Profile" />
+          <Scene key="student_profileSelected" component={Student_Profile} title="Profile"/>
           <Scene key="teacher_profile" component={Teacher_Profile} title="Teacher Profile" />
           <Scene key="teacher_profileSelected" component={Teacher_Profile} title="Teacher Profile" />
-          <Scene key="Chat" component={Chat} title="Chat"/>
+          <Scene key="Chat" component={Chat} title="Chat" />
            {/* <Scene key="Chat" component={Chat} title="Chat App"/> */}
         </Scene>
 

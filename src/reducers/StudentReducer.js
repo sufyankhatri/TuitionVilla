@@ -29,6 +29,7 @@ const INITIAL_STATE = {
     error: "",
     students: [],
     uri: null,
+    uid:'',
     imageLoading: false,
     selectedStudent: null,
     profiles: [],
@@ -68,7 +69,7 @@ export default (state = INITIAL_STATE, action) => {
             console.log(action.payload.uri);
             console.log(action.payload.email);
             console.log(action.payload.name);
-            return { ...state, uri: action.payload.uri, name: action.payload.name, email: action.payload.email };
+            return { ...state, uri: action.payload.uri, name: action.payload.name, email: action.payload.email, uid:action.payload.uid };
         case SELECTED_STUDENT_FETCH:
             console.log("fetched Student: " + action.payload);
             return { ...state, selectedStudent: action.payload }

@@ -40,19 +40,20 @@ class Backend {
     };
     this.messagesRef.limitToLast(20).on('child_added', onReceive);
   }
-  // send the message to the Backend
+  //send the message to the Backend
   sendMessage(message) {
-      var today = new Date()
+      var today = new Date().getTime()
     for (let i = 0; i < message.length; i++) {
       this.messagesRef.push({
         text: message[i].text,
         user: message[i].user,
-        createdAt: today.getDate(),
+        createdAt: today,
        //createdAt: firebase.database.ServerValue.TIMESTAMP
       });
     }
   }
-  // close the connection to the Backend
+
+  
   closeChat() {
     if (this.messagesRef) {
       this.messagesRef.off();

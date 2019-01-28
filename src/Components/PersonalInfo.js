@@ -1,10 +1,16 @@
 import React, { Component } from 'react';
 import {  FormInput } from 'react-native-elements';
 import { teacherUpdate } from '../actions';
-import { Text, View, ScrollView, TouchableOpacity } from 'react-native';
+import { Text, View, ScrollView, TouchableOpacity, BackHandler } from 'react-native';
 import { connect } from 'react-redux';
-
+import {Actions} from 'react-native-router-flux'
 class PersonalInfo extends Component {
+    componentDidMount(){
+        this.backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
+            Actions.teacher_signup(); // works best when the goBack is async
+            return true;
+          });
+    }
     render() {
         return (
             <ScrollView>

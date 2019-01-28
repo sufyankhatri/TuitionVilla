@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, FlatList, StyleSheet, ScrollView } from 'react-native'
+import { View, FlatList, StyleSheet, ScrollView, BackHandler } from 'react-native'
 import {SearchBar} from 'react-native-elements'
 import { connect } from 'react-redux'
 import { studentFetch, studentsFetch, onSelectedStudent} from '../actions/StudentActions'
@@ -8,6 +8,7 @@ import Student_Card from './Student_Card'
 import Teacher_Card from './Teacher_Card';
 import Loader from '../common/Spinner';
 import { List } from "react-native-elements"
+import { Actions } from 'react-native-router-flux';
 
 export class Student_Timeline extends Component {
   state = {
@@ -16,10 +17,13 @@ export class Student_Timeline extends Component {
   };
 
   componentDidMount() {
-    
-    this.props.teachersFetch();
     this.props.studentFetch();
-    console.log("Student Timeline")
+    this.props.teachersFetch();
+    this.backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
+      Actions.student_timeline(); // works best when the goBack is async
+      return true;
+    });
+    
    // this.setState({ data: this.props.students })
     
   }
@@ -107,7 +111,8 @@ const styles = StyleSheet.create({
 const mapStateToProps = (state) => {
   const { students } = state.student
   const{teachers, profiles} = state.teacher
-  return { students, profiles, teachers }
+  const{student,teacher}=state.auth
+  return { students, profiles, teachers, student, teacher }
 }
 
 export default connect(mapStateToProps, {studentFetch, studentsFetch, onSelectedStudent, TeacherChangeProfiles, teacherFetch, teachersFetch, onSelectedTeacher })(Student_Timeline)

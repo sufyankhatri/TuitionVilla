@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, ScrollView, View, TouchableOpacity } from 'react-native';
+import { Text, ScrollView, View, TouchableOpacity, BackHandler } from 'react-native';
 import { Button, FormInput, CheckBox } from 'react-native-elements';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
@@ -11,6 +11,12 @@ import {
 
 } from '../actions/StudentActions';
 class AdditionalInfo extends Component {
+    componentDidMount(){
+        this.backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
+            Actions.personalInfo_student(); // works best when the goBack is async
+            return true;
+          });
+    }
     state = {
         physics: false,
         chemistry: false,

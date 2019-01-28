@@ -63,8 +63,8 @@ export default (state = INITIAL_STATE, action) => {
             return { ...state, subjects: Subject }
         case TEACHER_FETCH_SUCCESS:
             console.log("inside teacher fetch success");
-            console.log(action.payload.uid);
-            return { ...state, uri: action.payload.uri, name: action.payload.name, email: action.payload.email, uid:action.payload.uid }
+            console.log(action.payload.name);
+            return { ...state, uri: action.payload.uri, name: action.payload.name, email: action.payload.email }
         case TEACHERS_FETCH_SUCCESS:
             return { ...state, teachers: action.payload, profiles: action.payload };
         case SELECTED_TEACHER_FETCH:

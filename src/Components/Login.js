@@ -1,11 +1,20 @@
 import React, { Component } from 'react';
-import { Image, Text, View, TouchableOpacity, ImageBackground } from 'react-native';
+import { Image, Text, View, TouchableOpacity, ImageBackground,BackHandler, BackAndroid } from 'react-native';
 import { FormInput, CheckBox } from 'react-native-elements';
 import { Actions } from 'react-native-router-flux';
 import Spinner from '../common/Spinner';
 import { connect } from 'react-redux';
 import { emailChanged, passwordChanged, loginUser, teacherState, studentState } from '../actions';
 class Login extends Component {
+    componentWillMount(){
+      
+        this.backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
+        //    Actions.loginDetailsStudent(); // works best when the goBack is async
+            BackHandler.exitApp()
+            return true;
+          });
+    
+}
     onEmailChange(text) {
         this.props.emailChanged(text);
     }
@@ -13,7 +22,6 @@ class Login extends Component {
         this.props.passwordChanged(text);
     }
     onLogInPress() {
-        
         const { email, password, student, teacher } = this.props;
 
         this.props.loginUser({ email, password, student, teacher });
@@ -40,7 +48,10 @@ class Login extends Component {
         }
 
         return (
-            <TouchableOpacity style={styles.ButtonStyle} onPress={this.onLogInPress.bind(this)}>
+            <TouchableOpacity style={styles.ButtonStyle} onPress={this.onLogInPress.bind(this)}
+            disabled={(this.props.student || this.props.teacher)?false:true}
+            
+            >
                 <Text style={styles.buttonText}>Log in</Text>
             </TouchableOpacity>
 
@@ -61,6 +72,12 @@ class Login extends Component {
 
     }
     render() {
+        let err="";
+        let btnColor='#000080';
+        if(this.props.teacher===false && this.props.student===false){
+            err="Please Check Teacher or Student"
+            btnColor="skyblue"
+        }
         return (
             <ImageBackground source={require('../../Icons/background.jpg')} style={{ width: '100%', height: '100%' }}>
                 <View style={styles.loginStyle}>
@@ -93,13 +110,17 @@ class Login extends Component {
                     <View>
                         <Text style={styles.errorTextStyle}>
                             {this.props.error}
+                            {err}
                         </Text>
                     </View>
                     <View>
                         {this.renderLogInButton()}
                     </View>
                     <View>
-                        <TouchableOpacity style={styles.ButtonStyle} onPress={this.SignUpPressed.bind(this)}>
+                        <TouchableOpacity style={styles.ButtonStyle} onPress={this.SignUpPressed.bind(this)}
+                        disabled={(this.props.student || this.props.teacher)?false:true}
+                        
+                        >
                             <Text style={styles.buttonText}>Sign Up</Text>
                         </TouchableOpacity>
                     </View>
@@ -112,10 +133,11 @@ class Login extends Component {
 
 const styles = {
     loginStyle: {
-        width: '90%',
+        width: '100%',
         flex: 1,
         flexDirection: 'column',
-        paddingLeft: 30
+        //paddingLeft: 30
+        justifyContent:"center"
     },
     containerStyle: {
         paddingBottom: 5,
@@ -139,9 +161,13 @@ const styles = {
 
     },
     imageStyle: {
-        width: "100%",
+        alignSelf:'center',
+        justifyContent:"center",
+        width:"95%",
         height: "30%",
-        paddingTop: 20
+        paddingTop: 10,
+        paddingBottom: 10
+
     },
     ButtonStyle: {
         alignSelf: 'center',
@@ -149,7 +175,7 @@ const styles = {
         marginBottom: 5,
         marginTop: 5,
         paddingTop: 5,
-        width: "95%",
+        width: "80%",
         borderWidth: 2,
         borderRadius: 5,
         backgroundColor: '#000080'
@@ -164,8 +190,9 @@ const styles = {
 
     },
     checkBoxStyle: {
-        width: '42.5%',
-        alignSelf: 'flex-start',
+        marginLeft:25,
+        width: '38%',
+   //     alignSelf: 'center',
         borderWidth: 1,
         borderColor: '#000080',
         backgroundColor: '#e2c3c0'

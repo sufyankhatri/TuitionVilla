@@ -1,12 +1,20 @@
 import React, { Component } from 'react';
-import { Text, View, ScrollView } from 'react-native';
+import { Text, View, ScrollView, BackHandler } from 'react-native';
 import { FormInput} from 'react-native-elements';
 import {connect} from 'react-redux'
 import {
     studentUpdate
 } from '../actions/StudentActions';
-
+import {Actions} from 'react-native-router-flux'
 class SignUp extends Component {
+    componentDidMount(){
+      
+            this.backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
+                Actions.loginDetailsStudent(); // works best when the goBack is async
+                return true;
+              });
+        
+    }
 
     render() {
         

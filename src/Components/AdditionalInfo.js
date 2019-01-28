@@ -1,11 +1,18 @@
 import React, { Component } from 'react';
-import { Text, ScrollView, View, TouchableOpacity } from 'react-native';
+import { Text, ScrollView, View, TouchableOpacity, BackHandler } from 'react-native';
 import { Button, FormInput, CheckBox } from 'react-native-elements';
 import Input from '../common/Input';
 import { connect } from 'react-redux';
 import { teacherUpdate, ClassInput, SubjectInput, signUser } from '../actions';
 import Spinner from '../common/Spinner';
+import {Actions} from 'react-native-router-flux'
 class AdditionalInfo extends Component {
+    componentDidMount(){
+        this.backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
+            Actions.personalInfoTeacher() // works best when the goBack is async
+            return true;
+          });
+    }
     state = {
         nine: false,
         ten: false,

@@ -6,6 +6,7 @@ import {connect} from 'react-redux';
 
 
 export class Student_Profile extends Component {
+
     render() {
         return (
             <View style={styles.container}>
