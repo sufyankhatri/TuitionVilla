@@ -54,11 +54,11 @@ export const signUser = ({ email, password, name, phone, address, cnic, age, edu
 
 export const signOut = () => {
     return (dispatch) => {
-        dispatch({ type: SIGN_OUT });
         firebase.auth().signOut()
             .then(() => {
                 Actions.Login();
-
+               dispatch({ type: SIGN_OUT });
+                
             })
             .catch(() => {
                 // console.log(error);
@@ -89,20 +89,20 @@ export const UploadImage = ({ uri }) => {
         payload: uri
     }
 }
-export const teacherFetch = () => {
+export const teacherFetch = (dispatch) => {
     const { currentUser } = firebase.auth();
     console.log("inside teacher fetch");
-    return (dispatch) => {
+    
         firebase.database().ref(`/users/Teachers/${currentUser.uid}`)
             .on('value', function (snapshot) {
                 dispatch({ type: TEACHER_FETCH_SUCCESS, payload: snapshot.val() });
             });
-    };
+    
 };
 
-export const teachersFetch = () => {
+export const teachersFetch = (dispatch) => {
 
-    return (dispatch) => {
+    
         firebase.database().ref(`/users/Teachers`)
             .on('value', snapshot => {
                 const teachersObj = snapshot.val();
@@ -113,7 +113,7 @@ export const teachersFetch = () => {
                 }
                 dispatch({ type: TEACHERS_FETCH_SUCCESS, payload: teachers });
             });
-    };
+    
 };
 
 export const onSelectedTeacher = (id) => {

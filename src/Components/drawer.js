@@ -3,14 +3,26 @@ import { TouchableOpacity, View, Text, Image } from 'react-native';
 import { Avatar } from 'react-native-elements';
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
-import { signOut, teacherFetch, currentTeacherFetch } from '../actions';
-import { currentStudentFetch } from '../actions/StudentActions';
+import { signOut, teacherFetch, currentTeacherFetch, teachersFetch } from '../actions';
+import { currentStudentFetch, student_sign_out, studentFetch, studentsFetch } from '../actions/StudentActions';
 import { Icon } from 'react-native-elements';
 class drawer extends Component {
-
+    // componentDidMount(){
+    //     console.log("cdm of drawer")
+    //     if(this.props.student){
+    //         this.props.teacherFetch()
+    //         this.props.studentsFetch()
+    //     }
+    //     else if(this.props.teacher){
+    //         this.props.studentFetch()
+    //         this.props.teachersFetch()
+    //     }
+    // }
     SignOutPressed() {
-
+      //  if(this.props.teacher)
         this.props.signOut();
+      //  else if(this.props.student)
+       // this.props.student_sign_out()
     }
 
     onHomePress() {
@@ -44,7 +56,7 @@ class drawer extends Component {
             if(this.props.email.length>14){
                 emailFont=9
             }
-            console.log("Email Length:"+this.props.email.length)
+           // console.log("Email Length:"+this.props.email.length)
         }
         return (
             <View style={{ backgroundColor: '#2e2ed3', height: "100%" }}>
@@ -143,14 +155,14 @@ const styles = {
 
 const mapStateToProps = (state) => {
     const{student,teacher,signOut}=state.auth
-    if(student){
-    const { name, email, uri } = state.student
-    console.log("sname:",name,"semail:",email,"suri",uri)  
-    return { signOut, uri, name, email, student, teacher };
-} 
-     else if(teacher){
+//     if(student){
+//     const { name, email, uri } = state.student
+//     console.log("sname:",name,"semail:",email,"suri",uri)  
+//     return { signOut, uri, name, email, student, teacher };
+// } 
+//      else if(teacher){
     const { name, email, uri } = state.teacher
-    console.log("teacher name:",name,"teacher email:",email,"teacher uri:",uri)
+    //console.log("teacher name:",name,"teacher email:",email,"teacher uri:",uri)
     return { signOut, uri, name, email, student, teacher };
 
 }
@@ -160,8 +172,8 @@ const mapStateToProps = (state) => {
     // if(uri===null)
     // let{uri} = state.teacher;
   
-};
+
 
 export default connect(mapStateToProps, {
-    signOut, teacherFetch, currentStudentFetch, currentTeacherFetch
+    signOut, teacherFetch, currentStudentFetch, currentTeacherFetch, studentFetch, teachersFetch, studentsFetch
 })(drawer);

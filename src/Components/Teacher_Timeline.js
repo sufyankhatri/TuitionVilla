@@ -16,12 +16,13 @@ export class Teacher_Timeline extends Component {
   };
 
   componentDidMount() {
+  
+  //  this.props.teacherFetch();
+   // this.props.studentsFetch();
     this.backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
       Actions.teacher_timeline(); // works best when the goBack is async
       return true;
     });
-    this.props.teacherFetch();
-    this.props.studentsFetch();
     console.log("Teacher timeline");
 
     // console.log("Profile")

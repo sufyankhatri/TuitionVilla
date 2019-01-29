@@ -72,9 +72,9 @@ export default (state = INITIAL_STATE, action) => {
             return { ...state, selectedTeacher: action.payload }
         case TEACHER_CHANGE_PROFILES:
             return { ...state, profiles: action.payload }
-        case SIGN_OUT:
-            //console.log("signed out!");
-            return { ...state, ...INITIAL_STATE }
+      //  case SIGN_OUT:
+        //    console.log("teacher signed out!");
+          //  return { ...state, ...INITIAL_STATE }
         case IMAGE_UPLOAD:
             return { ...state, uri: action.payload.uri }
         case CURRENT_TEACHER_FETCH_SUCCESS:

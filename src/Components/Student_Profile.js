@@ -8,6 +8,7 @@ import {connect} from 'react-redux';
 export class Student_Profile extends Component {
 
     render() {
+        console.log("student profile rendered")
         return (
             <View style={styles.container}>
                     <View style={styles.coverPhoto}>

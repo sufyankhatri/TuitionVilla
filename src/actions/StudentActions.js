@@ -2,6 +2,7 @@
 // import '@firebase//database';
 // import '@firebase//auth';
 import firebase from '../config/FirebaseConfig';
+
 import {
   STUDENT_UPDATE,
   STUDENT_CREATE_SUCCESS,
@@ -17,7 +18,8 @@ import {
   SELECTED_STUDENT_FETCH,
   STUDENTS_FETCH_SUCCESS,
   STUDENT_CHANGE_PROFILES,
-  CURRENT_STUDENT_FETCH_SUCCESS
+  CURRENT_STUDENT_FETCH_SUCCESS,
+  SIGN_OUT
 
   
 } from './types';
@@ -81,15 +83,15 @@ export const TurnLoadImage = () => {
 }
 
 
-export const studentFetch = () => {
+export const studentFetch = (dispatch) => {
   const {currentUser}= firebase.auth();
-  return (dispatch) =>{
+  
       console.log("call to reducer");
       firebase.database().ref(`/users/Students/${currentUser.uid}`)
       .on(('value'), snapshot =>{
-          dispatch({ type: STUDENT_FETCH_SUCCESS, payload: snapshot.val()});
+          dispatch({ type: TEACHER_FETCH_SUCCESS, payload: snapshot.val()});
       });
-  };
+
 }
 
 export const onSelectedStudent=(id)=>{
@@ -102,9 +104,8 @@ export const onSelectedStudent=(id)=>{
   };
 };
 
-export const studentsFetch = () => {
+export const studentsFetch = (dispatch) => {
   console.log("Fetching Student");
-  return (dispatch) => {
     firebase.database().ref(`/users/Students`)
       .on('value', snapshot => {
         const studentsObj = snapshot.val();
@@ -115,7 +116,7 @@ export const studentsFetch = () => {
         }
         dispatch({ type: STUDENTS_FETCH_SUCCESS, payload: students });
       });
-  };
+  
 };
 
 
@@ -134,4 +135,18 @@ export const currentStudentFetch=()=>{
         dispatch({ type: CURRENT_STUDENT_FETCH_SUCCESS, payload: snapshot.val() });
       });
   };
+}
+
+export const student_sign_out=()=>{
+  return (dispatch) => {
+    dispatch({ type: SIGN_OUT });
+    firebase.auth().signOut()
+        .then(() => {
+            Actions.Login();
+
+        })
+        .catch(() => {
+            // console.log(error);
+        });
+};
 }

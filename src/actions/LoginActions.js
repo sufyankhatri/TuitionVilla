@@ -3,6 +3,7 @@
 //import firebase from 'firebase';
 import firebase from '../config/FirebaseConfig';
 import { Actions } from 'react-native-router-flux';
+import {connect }from 'react-redux'
 import {
   EMAIL_CHANGED,
   PASSWORD_CHANGED,
@@ -12,8 +13,8 @@ import {
   TEACHER_STATE,
   STUDENT_STATE
 } from './types';
-import {teacherFetch} from './TeacherActions';
-import { studentFetch } from './StudentActions';
+import {teacherFetch, teachersFetch} from './TeacherActions';
+import { studentFetch, studentsFetch } from './StudentActions';
 
 
 export const emailChanged = (text) => {
@@ -56,12 +57,14 @@ export const loginUser = ({ email, password, student, teacher }) => {
         console.log("Student:",student,"Teacher:",teacher);
         if (student)
           {
-         // studentFetch();
+          studentFetch(dispatch);
+          teachersFetch(dispatch)
           Actions.student_timeline();
           console.log("Actions.student");
           }
         else if(teacher){
-     //     teacherFetch();
+          teacherFetch(dispatch);
+          studentsFetch(dispatch)
           Actions.teacher_timeline();
           console.log("Actions.teacher");
         }
@@ -80,6 +83,3 @@ export const loginUser = ({ email, password, student, teacher }) => {
 // const loginUserFail = () => {
 
 // };
-
-
-

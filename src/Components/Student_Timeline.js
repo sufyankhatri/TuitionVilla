@@ -17,14 +17,19 @@ export class Student_Timeline extends Component {
   };
 
   componentDidMount() {
-    this.props.studentFetch();
-    this.props.teachersFetch();
+    console.log("cdm student timeline")   
+   // this.props.studentFetch();
+   // this.props.teachersFetch();
     this.backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
       Actions.student_timeline(); // works best when the goBack is async
       return true;
     });
     
    // this.setState({ data: this.props.students })
+    
+  }
+  componentWillMount(){
+    console.log("cwm student timeline")
     
   }
 
@@ -69,6 +74,7 @@ export class Student_Timeline extends Component {
 
 
   render() {
+    console.log("inside render student timeline")
     let comp = <Loader />
     let fetchStatus = "Teacher not fetched yet"
     if (this.props.teachers.length > 0) {

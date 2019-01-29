@@ -10,6 +10,7 @@ class Login extends Component {
       
         this.backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
         //    Actions.loginDetailsStudent(); // works best when the goBack is async
+            Actions.Login()
             BackHandler.exitApp()
             return true;
           });

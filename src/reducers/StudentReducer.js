@@ -24,14 +24,14 @@ const INITIAL_STATE = {
     Class: "",
     institute: "",
     subjects: [],
-    student: null,
-    image: null,
+    student: '',
+    image: '',
     error: "",
     students: [],
-    uri: null,
+    uri: '',
     uid:'',
     imageLoading: false,
-    selectedStudent: null,
+    selectedStudent: '',
     profiles: [],
     title:''
 };
@@ -62,9 +62,9 @@ export default (state = INITIAL_STATE, action) => {
         case IMAGE_UPLOAD:
             //console.log("hello jee",action.payload);
             return { ...state, uri: action.payload, imageLoading: false }
-        case SIGN_OUT:
-            //console.log("signed out!");
-            return { ...state, ...INITIAL_STATE }
+      //  case SIGN_OUT:
+        //    console.log("student signed out!");
+         //   return { ...state, ...INITIAL_STATE }
         case STUDENT_FETCH_SUCCESS:
             console.log(action.payload.uri);
             console.log(action.payload.email);
